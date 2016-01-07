@@ -1,0 +1,46 @@
+<<!DOCTYPE html>
+<html>
+<head>
+	<title>Index</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+  <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+</head>
+<body>
+<div class="container">
+	<div class="base">
+		<input type="hidden" value="{{ques_no}}" id="ques_no">
+		<input type="hidden" value="{{answer}}" id="ques_no">
+		<span>wordGame</span>&nbsp;&nbsp;&nbsp;&nbsp;
+		<span>score : </span>&nbsp;&nbsp;&nbsp;&nbsp;
+		<span id="score"> {{ score }}</span>&nbsp;&nbsp;&nbsp;&nbsp;
+		<span>User</span>&nbsp;&nbsp;&nbsp;&nbsp;
+	</div>
+
+	<div class="q_page">
+		<div>{{ question }}</div>
+		<div><img src="{{image}}"></div>
+		<form method="post">
+			<label for= "1">{{first}}</label>
+			<input type="radio" name="answer" id="1">
+			<label for= "2">{{second}}</label>
+			<input type="radio" name="answer" id="2">
+			<label for= "3">{{third}}</label>
+			<input type="radio" name="answer" id="3">
+			<label for= "4">{{fourth}}</label>
+			<input type="radio" name="answer" id="4">
+			<input type="button" value="Submit">
+		</form>
+	</div>
+	<div class="ans_page">
+		<div>{{ meaning }}</div>
+		<div><img src="{{image}}"></div>
+		<div> {{word}}</div>
+		<div> {{sentence}}</div>
+		<input type="submit" value="next">
+	</div>
+</div>
+
+</body>
+</html>
