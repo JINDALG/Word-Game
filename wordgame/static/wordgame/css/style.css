@@ -51,6 +51,15 @@ body {
   box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
 }
 
+.card .error {
+  position: relative;
+  margin: 0 0 20px;
+  padding: 0px 0 0px 60px;
+  color: #006699;
+  font-size: 20px;
+  font-weight: 300;
+}
+
 /* Scroll To Bottom */
 #codepen, #portfolio {
   position: fixed;

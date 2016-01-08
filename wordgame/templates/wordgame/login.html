@@ -56,6 +56,9 @@
     </h1>
     <form method="post">
       {% csrf_token %}
+      {% if error %}
+        <div class="error">{{error}}</div>
+      {% endif %}
       {% for field in Register_fields %}
         <div class="input-container">
           <input id="{{ field.label }}" name="{{ field.name }}" required="required"/>
