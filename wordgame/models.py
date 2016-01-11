@@ -17,10 +17,10 @@ class Quiz(models.Model):
 
 
 class User(models.Model):
-	user_name = models.CharField(max_length=20)
+	username = models.CharField(max_length=20)
 	password = models.CharField(max_length=20)
 	score = models.IntegerField(default =0)
 
 	def __unicode__(self):
-		return self.user_name
+		return self.username
 
