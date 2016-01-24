@@ -27,8 +27,9 @@
             <div class="error">{{error}}</div>
           {% endif %}
           {% for field in Login_fields %}
+          
             <div class="input-container">
-              <input id="{{ field.label }}" name="{{ field.name }}" required="required"/>
+              <input id="{{ field.label }}" name="{{ field.name }}" type="{% if 'Password' in field.name %}{{ 'password' }}{% else %}{{ 'text' }}{% endif %}" required="required"/>
               <label for="{{ field.label }}"> {{ field.label }} </label>
               <div class="bar"></div>
             </div>
@@ -53,7 +54,7 @@
       {% endif %}
       {% for field in Register_fields %}
         <div class="input-container">
-          <input id="{{ field.label }}" name="{{ field.name }}" required="required"/>
+          <input id="{{ field.label }}" name="{{ field.name }}" type="{% if 'Password' in field.name %}{{ 'password' }}{% else %}{{ 'text' }}{% endif %}" required="required"/>
           <label for="{{ field.label }}"> {{ field.label }} </label>
           <div class="bar"></div>
         </div>

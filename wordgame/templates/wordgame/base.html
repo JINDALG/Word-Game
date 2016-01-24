@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Wordgame</title>
+</head>
+<body>
+{% if user %}
+	hello {{ user.username }}
+	<a href="/wordgame/logout">Logout</a>
+{% else %}
+	Hello guest 
+	<a href="/wordgame/login">Login</a>
+{% endif %}
+{% block quiz %}
+{% endblock %}
+</body>
+</html>

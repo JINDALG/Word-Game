@@ -2,7 +2,8 @@ from django import forms
 
 class Login_form(forms.Form):
 	Username = forms.CharField(label='Username' , max_length = 20);
-	Password = forms.CharField(widget = forms.PasswordInput, label='Password' , max_length = 20);
+	Password = forms.CharField(widget = forms.PasswordInput, label='Password');
+	
 
 
 class Register_form(forms.Form):
