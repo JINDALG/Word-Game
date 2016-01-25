@@ -130,6 +130,7 @@ def check_ans(request):
 				# return HttpResponse(q_text)
 				if u_answer == question.meaning :
 					user.score += 1
+					user.save()
 					response['complement'] = 'Good Job you are right!'
 					response['answer'] = question.question + question.meaning
 					response['sentence'] = question.sentence
@@ -162,10 +163,11 @@ def game(request):
 	count = 0
 	user = login_check(request)
 	if user :
-		if request.method == 'POST':
+		if request.method == 'post':
 			return HttpResponse('Hello: ' + user.username + '\n' + 'Your score is : ' + user.score)
 		else :
 			user.score = 0
+			user.save()
 			return render(request , 'wordgame/game.html' , {'user' : user})
 	else :
 		return HttpResponseRedirect('/wordgame/login')

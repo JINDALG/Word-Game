@@ -97,6 +97,6 @@ $('#next').on('click',function(event) {
 		load_questions();
 	}
 	else {
-		$.post("/wordgame/game")
+		$.post("/wordgame/game",{suggest: 'hello'})
 	}
 })
