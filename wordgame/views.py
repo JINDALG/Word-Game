@@ -127,14 +127,20 @@ def check_ans(request):
 				u_answer = request.POST.get('u_answer')
 				response = {}
 				question = Quiz.objects.get(question= q_text, image_url = img)
-				# return HttpResponse(q_text)
-				if u_answer == question.meaning :
+				response = dict(u_answer = u_answer, img = img )
+				if u_answer == "None":
+					response['complement'] = 'Time out, try next question'
+					response['score'] = user.score
+					return HttpResponse(
+						json.dumps(response),
+						content_type = 'application/json'
+					)
+				elif u_answer == question.meaning :
 					user.score += 1
 					user.save()
 					response['complement'] = 'Good Job you are right!'
 					response['answer'] = question.question + question.meaning
 					response['sentence'] = question.sentence
-					response['img'] = img
 					response['main_word'] = question.main_word
 					response['score'] = user.score
 					return HttpResponse(
@@ -143,7 +149,6 @@ def check_ans(request):
 					)
 				else :
 					response['complement'] = 'Bad Guess, Better luck next time!'
-					response['img'] = img
 					response['score'] = user.score
 					return HttpResponse(
 						json.dumps(response),

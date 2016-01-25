@@ -50,6 +50,13 @@ function load_questions() {
 			$("#full_answer").text('');
 			$("#main_word").text('');
 			$("#sentence").text('');
+			
+				setTimeout(function(){ 
+					if ($('#check').is(":visible")) {
+						check_answer()
+					}
+						 }, 5000);
+			
 		},
 
 		error : function(xhr,errmsg,err) {
@@ -60,21 +67,28 @@ function load_questions() {
 }
 $('#check').on('click',function(event) {
 	event.preventDefault();
-	check_answer();
+	u_answer = "None"
+	if($("input:radio[name='answers']").is(":checked")) {
+		u_answer = $('input:radio[name=answers]:checked').val()
+	}
+	else {
+		u_answer = 'None'
+	}
+	check_answer(u_answer);
 })
 
-function check_answer() {
+function check_answer(u_answer) {
 	console.log('data is loading');
 	$.ajax({
 		url : 'check_ans/',
 		type : 'POST',
-		data : {q_text : q_text, img : img_url, u_answer : $('input:radio[name=answers]:checked').val() },
+		data : {q_text : q_text, img : img_url, u_answer : u_answer },
 
 		success : function(check_response) {
 			console.log('hello');
 			$('#question').hide()
 			$('#answer').show()
-			console.log(check_response);
+			console.log(check_response.u_answer);
 			$("#answer img").attr("src",check_response.img);
 			$("#answer #score").text(check_response.score);
 			$("#complement").text(check_response.complement);
