@@ -163,8 +163,8 @@ def game(request):
 	count = 0
 	user = login_check(request)
 	if user :
-		if request.method == 'post':
-			return HttpResponse('Hello: ' + user.username + '\n' + 'Your score is : ' + user.score)
+		if request.method == 'POST':
+			return HttpResponse('Hello: ' + user.username + '<br>' + 'Your score is : ' + str(user.score))	
 		else :
 			user.score = 0
 			user.save()

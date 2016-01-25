@@ -14,7 +14,9 @@ $('#start_game').on('click',function(event) {
 	event.preventDefault();
 	load_questions();
 })
-
+$('#submit').hide()
+$('#question').hide()
+$('#answer').hide()
 var q_text
 var img_url
 var count
@@ -92,11 +94,12 @@ function check_answer() {
 
 
 $('#next').on('click',function(event) {
-	if (count < 1 ) {
+	if (count < 3 ) {
 		event.preventDefault();
 		load_questions();
 	}
 	else {
-		$.post("/wordgame/game",{suggest: 'hello'})
+		$('#answer').remove()
+		$('#submit').show()
 	}
 })
