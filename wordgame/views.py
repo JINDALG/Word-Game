@@ -3,17 +3,16 @@ from .models import Quiz,User
 from django.http import HttpResponse,HttpResponseRedirect
 from .forms	import Login_form,Register_form
 from django import forms
-import json
+import json,random
 
-
-def index(request):
-	user = None
+def login_check(request):
 	try :
-		user = request.session['username']
-		user = User.objects.filter(username = user)
-		user = user[0]
+		user = User.objects.get(username = request.session['username'])
+		return user
 	except :
-		return render(request , 'wordgame/base.html' , {'user' : user})
+		return None
+def index(request):
+	user = login_check(request)
 	return render(request , 'wordgame/base.html' , {'user' : user})
 
 def login(request):
@@ -85,36 +84,88 @@ def logout(request):
 		return HttpResponseRedirect('/wordgame')
 	return HttpResponseRedirect('/wordgame')
 
-q = None
-
+seq = None
+count =None
 def load_q(request):
-	global q
-	if request.method =='DELETE' : 
-		q = Quiz.objects.all()
-		q1 = q[0]
-		response = {}
-		response['img'] = q1.image_url
-		response['question'] = q1.question
-		return HttpResponse(
-			json.dumps(response),
-			content_type='application/json'
-		)
-	else:
-		return HttpResponse(
-            json.dumps({"nothing to see": "this isn't happening"}),
-            content_type="application/json"
-        )
+	user  = login_check(request)
+	if user :
+		global seq
+		global count
+		if request.method =='POST' :
+			# if count == 3 :
+			# 	return render(request, 'wordgame/thanks.html', {'user' : user})
+			if count == 0:
+				seq = random.sample(range(1,4),3)
+			q = Quiz.objects.get(pk=seq[count])
+			response = {}
+			options = random.sample(range(1,5),4)
+			count +=1 
+			i=1
+			for option in options:
+				response['option'+str(i)] = Quiz.objects.get(pk = option).meaning
+				i += 1
+			response['img'] = q.image_url
+			response['question'] = q.question
+			response['count'] = count
+			response['score'] = user.score
+			return HttpResponse(
+				json.dumps(response),
+				content_type='application/json'
+			)
+		else:
+			return HttpResponseRedirect('/wordgame/game')
+	else : 
+		HttpResponseRedirect('/wordgame/game')
+
+def check_ans(request):
+	user = login_check(request)
+	if user :
+		if request.method == 'POST':
+			try:
+				q_text = request.POST.get('q_text')
+				img = request.POST.get('img')
+				u_answer = request.POST.get('u_answer')
+				response = {}
+				question = Quiz.objects.get(question= q_text, image_url = img)
+				# return HttpResponse(q_text)
+				if u_answer == question.meaning :
+					user.score += 1
+					response['complement'] = 'Good Job you are right!'
+					response['answer'] = question.question + question.meaning
+					response['sentence'] = question.sentence
+					response['img'] = img
+					response['main_word'] = question.main_word
+					response['score'] = user.score
+					return HttpResponse(
+						json.dumps(response),
+						content_type = 'application/json'
+					)
+				else :
+					response['complement'] = 'Bad Guess, Better luck next time!'
+					response['img'] = img
+					response['score'] = user.score
+					return HttpResponse(
+						json.dumps(response),
+						content_type = 'application/json'
+					)
+			except :
+				return HttpResponseRedirect('/wordgame/game')
+		else :
+			return HttpResponseRedirect('/wordgame/game')		
+	else :
+		return HttpResponseRedirect('/wordgame/login')
 
 def game(request):
-	user = None
-	try :
-		user = request.session['username']
-		user = User.objects.filter(username = user)
-		user = user[0]
+	global seq
+	global count
+	seq = None
+	count = 0
+	user = login_check(request)
+	if user :
 		if request.method == 'POST':
 			return HttpResponse('Hello: ' + user.username + '\n' + 'Your score is : ' + user.score)
 		else :
-			q = Quiz.objects.all()
+			user.score = 0
 			return render(request , 'wordgame/game.html' , {'user' : user})
-	except :
-		return HttpResponseRedirect('/wordgame/game')
+	else :
+		return HttpResponseRedirect('/wordgame/login')

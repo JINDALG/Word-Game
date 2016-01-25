@@ -11,29 +11,29 @@
  	<button id='start_game'>start_game</button>
  	<div id='error_q'></div>
  	<div id='question'>
- 		<div><h2><center>Score :  <span>{{user.score}}</span></center></h2></div>
- 		<div><h2><center><img src="{{q.question}}"></center></h2></div>
- 		<div><h2><center><img src="{{question.image_url}}"></center></h2></div>
- 		<form method="post">
- 			
+ 		<div><h2><center>Score :  <span id='score'></span></center></h2></div>
+ 		<div><h2><center id="q_text"></center></h2></div>
+ 		<div><h2><center><img src="{{question.image_url}}" height="100" width="100"></center></h2></div>
+ 		<form method="post" id="form">
  			<input type="radio" name="answers" id='option1'>
- 			<label for="option1">{{option1}}</label>
+ 			<label for="option1"></label>
  			<input type="radio" name="answers" id='option2'>
- 			<label for="option2">{{option2}}</label>
+ 			<label for="option2"></label>
  			<input type="radio" name="answers" id='option3'>
- 			<label for="option3">{{option3}}</label>
+ 			<label for="option3"></label>
  			<input type="radio" name="answers" id='option4'>
- 			<label for="option4">{{option4}}</label>
+ 			<label for="option4"></label>
  			<input type="submit" value="Check" id="check">
  		</form>
  	</div>
  	<div id='answer'>
- 		<div><h2><center>Score :  <span>{{user.score}}</span></center></h2></div>
- 		<div><h2><center>{{q.question}}{{q.meaning}}</center></h2></div>
- 		<div><h2><center><img src="{{question.image_url}}"></center></h2></div>
- 		<div><h2><center>{{q.main_word}}</center></h2></div>
- 		<div><h2><center>{{q.sentence}}</center></h2></div>
- 		<input type="submit" value="Next">
+ 		<div><h2><center>Score :  <span id='score'></span></center></h2></div>
+ 		<div><h2><center id='complement'></center></h2></div>
+ 		<div><h2><center id='full_answer'></center></h2></div>
+ 		<div><h2><center><img src="" height="100" width="100"></center></h2></div>
+ 		<div><h2><center id='main_word'></center></h2></div>
+ 		<div><h2><center id='sentence'></center></h2></div>
+ 		<button id='next' type="submit">Next</button>
  	</div>
  	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
 	<script src="{% static 'wordgame/js/index.js' %}"></script>

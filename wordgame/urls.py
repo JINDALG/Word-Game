@@ -8,4 +8,5 @@ urlpatterns = [
 	url(r'^logout/$', views.logout, name = 'logout'),
 	url(r'^game/$', views.game, name = 'game'),
 	url(r'^game/load_q/$', views.load_q, name = 'load_q'),
+	url(r'^game/check_ans/$', views.check_ans, name = 'check_ans'),
 ]
