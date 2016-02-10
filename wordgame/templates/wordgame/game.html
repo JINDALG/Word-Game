@@ -7,11 +7,12 @@
 </head>
 <body>
  	<h2><center>Hello {{user.username}}</center></h2>
-
+ 	
  	<button id='start_game'>start_game</button>
  	<div id='error_q'></div>
  	<div id='question'>
- 		<div><h2><center>Score :  <span id='score'></span></center></h2></div>
+ 		<div id="time"></div>
+ 		<div><h2><center>Score : <span id='score'></span></center></h2></div>
  		<div><h2><center id="q_text"></center></h2></div>
  		<div><h2><center><img src="{{question.image_url}}" height="100" width="100"></center></h2></div>
  		<form method="post" id="form">

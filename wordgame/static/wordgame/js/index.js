@@ -20,6 +20,7 @@ $('#answer').hide()
 var q_text
 var img_url
 var count
+var interval,time
 function load_questions() {
 	$.ajax({
 		url : 'load_q/',
@@ -50,12 +51,19 @@ function load_questions() {
 			$("#full_answer").text('');
 			$("#main_word").text('');
 			$("#sentence").text('');
-			
-				setTimeout(function(){ 
-					if ($('#check').is(":visible")) {
-						check_answer()
-					}
-						 }, 5000);
+			$('input[type="radio"]').prop('checked', false);
+			remain_time =30
+			$('#time').text(remain_time)
+			time = setTimeout(function(){ 
+				if ($('#check').is(":visible")) {
+					$('#check').click()
+				}
+					 }, 30000);
+
+			interval =  setInterval(function(){
+				remain_time -= 1
+				$('#time').text(remain_time)
+			},1000);
 			
 		},
 
@@ -67,7 +75,7 @@ function load_questions() {
 }
 $('#check').on('click',function(event) {
 	event.preventDefault();
-	u_answer = "None"
+	u_answer = null
 	if($("input:radio[name='answers']").is(":checked")) {
 		u_answer = $('input:radio[name=answers]:checked').val()
 	}
@@ -78,6 +86,8 @@ $('#check').on('click',function(event) {
 })
 
 function check_answer(u_answer) {
+	clearTimeout(time)
+	clearInterval(interval)
 	console.log('data is loading');
 	$.ajax({
 		url : 'check_ans/',

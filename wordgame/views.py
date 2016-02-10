@@ -1,91 +1,103 @@
+from django.views.decorators.csrf import csrf_exempt
 from django.shortcuts import render
 from .models import Quiz,User
 from django.http import HttpResponse,HttpResponseRedirect
 from .forms	import Login_form,Register_form
 from django import forms
 import json,random
+from django.views.generic import View
 
 def login_check(request):
 	try :
-		user = User.objects.get(username = request.session['username'])
+		user = User.objects.get(email = request.session['user'])
 		return user
 	except :
 		return None
+
 def index(request):
 	user = login_check(request)
 	return render(request , 'wordgame/base.html' , {'user' : user})
 
-def login(request):
-	if request.method == 'POST':
-		Login_fields = Login_form()
-		Register_fields  =Register_form()
-		if 'login' in request.POST:
-			form = Login_form(request.POST)
-			if form.is_valid():
-				username = form.cleaned_data['Username']
-				password = form.cleaned_data['Password']
-				user = User.objects.filter(username = username)
-				if user and user[0].password == password:
-					request.session['username'] = username
-					return HttpResponseRedirect('/wordgame')
-				else :
-					error = "username and password does not match"
-					return render(request , 'wordgame/login.html' , {'Login_fields' : Login_fields, 'Register_fields' : Register_fields,'error' : error})
+def Authenticate(email,Password):
+	try :
+		user = User.objects.get(email = email)
+		if user.password == Password:
+			return user
+		return None
+	except :
+		return None
+		
+class LoginView(View):
+	template = 'wordgame/login.html'
+	Login_fields = Login_form
+	Register_fields  =Register_form
+	def login(self,request,email):
+		request.session['user'] = email
+	def get(self,request):
+		if login_check(request) :
 			return HttpResponseRedirect('/wordgame')
-		if 'register' in request.POST:
-			form = Register_form(request.POST)
+		return render(request , self.template , {'Login_fields' : self.Login_fields(), 'Register_fields' : self.Register_fields()})
+	def post(self,request):
+		if 'login' in request.POST:
+			form = self.Login_fields(request.POST)
 			if form.is_valid():
-				username = form.cleaned_data['Username']
-				password = form.cleaned_data['Password']
-				repeat_password = form.cleaned_data['Repeat_Password']
-				Login_fields = Login_form()
-				Register_fields  =Register_form()
-				if len(username) < 3:
-					error = "Username must conatain at least 3 character"
-					return render(request , 'wordgame/login.html' , {'Login_fields' : Login_fields, 'Register_fields' : Register_fields,'error' : error})
-				if len(password) < 3:
-					error = "Password must conatain at least 3 character"
-					return render(request , 'wordgame/login.html' , {'Login_fields' : Login_fields, 'Register_fields' : Register_fields,'error' : error})
-				if password != repeat_password :
-					error = "Password does not match!"
-					return render(request , 'wordgame/login.html' , {'Login_fields' : Login_fields, 'Register_fields' : Register_fields,'error' : error})
-
-				user = User.objects.filter(username = username)
+				email = request.POST.get('email')
+				password = request.POST.get('password')
+				user = Authenticate(email,password)
 				if user:
-					error  ="user already exist"
-					return render(request , 'wordgame/login.html' , {'Login_fields' : Login_fields, 'Register_fields' : Register_fields,'error' : error})
-				else :
-					user = User(username = username, password=password)
-					user.save()
+					self.login(request,email)
 					return HttpResponseRedirect('/wordgame')
-					
+				else:
+					print email
+					print password
+					error = "username and password does not match"
+					return render(request , self.template , {
+						'Login_fields' : form, 
+						'Register_fields' : self.Register_fields(),
+						'errors' : error,
+						'method':'login'})
 			else :
-				errors = form.errors
-				error = errors.values()
-				Login_fields = Login_form()
-				Register_fields  =Register_form()
-				error = error[0]
-				return render(request , 'wordgame/login.html' , {'Login_fields' : Login_fields, 'Register_fields' : Register_fields,'error' : error})
-
-
-
-	else :
-		Login_fields = Login_form()
-		Register_fields  =Register_form()
-		return render(request , 'wordgame/login.html' , {'Login_fields' : Login_fields, 'Register_fields' : Register_fields})
-
-
-
-
+				error = form.errors
+				return render(request , self.template , {
+					'Login_fields' : form, 
+					'Register_fields' : self.Register_fields(),
+					'errors' : error.values()})
+		elif 'register' in request.POST:
+			form = self.Register_fields(request.POST)
+			if form.is_valid():
+				username = request.POST.get('username')
+				email = request.POST.get('email')
+				password = request.POST.get('password')
+				c_password = request.POST.get('c_password')
+				if password == c_password:
+					user = User(username = username, email = email, password = password)
+					user.save()
+					request.session['user'] = str(email)
+					return HttpResponseRedirect('/wordgame')
+				else :
+					errors = "password does not match"
+					return render(request, self.template, {
+						'Login_fields' : self.Login_fields(), 
+						'Register_fields' : form,
+						'register_error':errors,
+						'method':'register'})
+			else :
+				error = form.errors
+				return render(request, self.template, {
+					'Login_fields' : self.Login_fields(), 
+					'Register_fields' : form,
+					'errors' : error.values(),
+					'method':'register'})
 def logout(request):
 	try:
-		del request.session['username']
+		del request.session['user']
 	except:
 		return HttpResponseRedirect('/wordgame')
 	return HttpResponseRedirect('/wordgame')
 
 seq = None
 count =None
+@csrf_exempt
 def load_q(request):
 	user  = login_check(request)
 	if user :
@@ -117,6 +129,7 @@ def load_q(request):
 	else : 
 		HttpResponseRedirect('/wordgame/game')
 
+@csrf_exempt
 def check_ans(request):
 	user = login_check(request)
 	if user :
@@ -160,7 +173,7 @@ def check_ans(request):
 			return HttpResponseRedirect('/wordgame/game')		
 	else :
 		return HttpResponseRedirect('/wordgame/login')
-
+@csrf_exempt
 def game(request):
 	global seq
 	global count

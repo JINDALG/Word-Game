@@ -21,15 +21,14 @@
       <div class="card"></div>
       <div class="card">
         <h1 class="title">Login</h1>
-        <form method="post">
+        <form method="post" action="/wordgame/login/">
           {% csrf_token %}
-          {% if error %}
-            <div class="error">{{error}}</div>
+          {% if errors %}
+            <div class="error">{{errors}}</div>
           {% endif %}
           {% for field in Login_fields %}
-          
             <div class="input-container">
-              <input id="{{ field.label }}" name="{{ field.name }}" type="{% if 'Password' in field.name %}{{ 'password' }}{% else %}{{ 'text' }}{% endif %}" required="required"/>
+              <input id="{{ field.label }}" name="{{ field.name }}" type="{% if 'password' in field.name %}{{ 'password' }}{% else %}{{ 'text' }}{% endif %}" required="required"/>
               <label for="{{ field.label }}"> {{ field.label }} </label>
               <div class="bar"></div>
             </div>
@@ -47,14 +46,14 @@
     <h1 class="title">Register
       <div class="close"></div>
     </h1>
-    <form method="post">
+    <form method="post" action="/wordgame/register/">
       {% csrf_token %}
-      {% if error %}
-        <div class="error">{{error}}</div>
+      {% if erorrs %}
+        <div class="error">{{errors}}</div>
       {% endif %}
       {% for field in Register_fields %}
         <div class="input-container">
-          <input id="{{ field.label }}" name="{{ field.name }}" type="{% if 'Password' in field.name %}{{ 'password' }}{% else %}{{ 'text' }}{% endif %}" required="required"/>
+          <input id="{{ field.label }}" name="{{ field.name }}" type="{% if 'word' in field.name %}{{ 'password' }}{% else %}{{ 'text' }}{% endif %}" required="required"/>
           <label for="{{ field.label }}"> {{ field.label }} </label>
           <div class="bar"></div>
         </div>
@@ -69,9 +68,5 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
 
         <script src="{% static 'wordgame/js/index.js' %}"></script>
-
-    
-    
-    
   </body>
 </html>

@@ -218,16 +218,16 @@ body {
 }
 .card .input-container input:focus ~ label {
   color: #9d9d9d;
-  -webkit-transform: translate(-12%, -50%) scale(0.75);
-          transform: translate(-12%, -50%) scale(0.75);
+  -webkit-transform: translate(-10%, -60%) scale(0.75);
+          transform: translate(-10%, -60%) scale(0.75);
 }
 .card .input-container input:focus ~ .bar:before, .card .input-container input:focus ~ .bar:after {
   width: 50%;
 }
 .card .input-container input:valid ~ label {
   color: #9d9d9d;
-  -webkit-transform: translate(-12%, -50%) scale(0.75);
-          transform: translate(-12%, -50%) scale(0.75);
+  -webkit-transform: translate(-10%, -60%) scale(0.75);
+          transform: translate(-10%, -60%) scale(0.75);
 }
 .card .input-container label {
   position: absolute;

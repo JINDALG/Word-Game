@@ -1,12 +1,13 @@
 from django import forms
+from .models import User
 
 class Login_form(forms.Form):
-	Username = forms.CharField(label='Username' , max_length = 20);
-	Password = forms.CharField(widget = forms.PasswordInput, label='Password');
-	
+	email = forms.EmailField()
+	password = forms.CharField()
 
+class Register_form(forms.ModelForm):
+	c_password = forms.CharField()
+	class Meta:
+		model = User
+		fields = ['username','email', 'password', 'c_password']
 
-class Register_form(forms.Form):
-	Username = forms.CharField(label = 'Username' , max_length=20);
-	Password = forms.CharField(label='Password' , widget = forms.PasswordInput, max_length=20);
-	Repeat_Password = forms.CharField(label = 'Repeat Password', widget = forms.PasswordInput , max_length=20);	
