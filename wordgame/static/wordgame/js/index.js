@@ -1,3 +1,5 @@
+$(document).ready(function(){
+
 $('.toggle').on('click', function() {
   $('.container').stop().addClass('active');
 });
@@ -127,3 +129,4 @@ $('#next').on('click',function(event) {
 		$('#submit').show()
 	}
 })
+});

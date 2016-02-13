@@ -26,4 +26,3 @@ class User(models.Model):
 
 	def __unicode__(self):
 		return self.username
-

@@ -1,17 +1,38 @@
 <!DOCTYPE html>
 <html>
+{% load staticfiles %}
 <head>
 	<title>Wordgame</title>
+	<link rel="stylesheet" type="text/css" href="{% static 'wordgame/css/bootstrap.min.css' %}" >
+	<script type="text/javascript" src="{% static 'wordgame/js/jquery.js' %}"></script>
+	<script type="text/javascript" src="{% static 'wordgame/js/bootstrap.min.js' %}"></script>
+	<script src="{% static 'wordgame/js/index.js' %}"></script>
 </head>
 <body>
-{% if user %}
-	hello {{ user.username }}
-	<a href="/wordgame/logout">Logout</a>
-{% else %}
-	Hello guest 
-	<a href="/wordgame/login">Login</a>
-{% endif %}
-{% block quiz %}
-{% endblock %}
+	<nav class="navbar navbar-inverse">
+  		<div class="container-fluid">
+    		<div class="navbar-header">
+      			<button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+        			<span class="icon-bar"></span>
+        			<span class="icon-bar"></span>
+        			<span class="icon-bar"></span> 
+      			</button>
+      			<a class="navbar-brand" href="#">CATFAT</a>
+    		</div>
+    		<div class="collapse navbar-collapse" id="myNavbar">
+      			<ul class="nav navbar-nav">
+			        <li class="active"><a href="#">Home</a></li>
+     			</ul>
+      			<ul class="nav navbar-nav navbar-right">
+			        {% if user %}<li><a href="#"><span class="glyphicon glyphicon-user"></span>{{ user.username }}</a></li>{% endif %}
+			        {% if user %}<li><a href="/wordgame/logout"><span class="glyphicon"></span>Logout</a></li>{% endif %}
+			        {% if not user %}<li><a href="/wordgame/login"><span class="glyphicon"></span>Login</a></li>{% endif %}
+			        {% if not user %}<li><a href="/wordgame/login"><span class="glyphicon"></span>SignUp</a></li>{% endif %}
+     	 		</ul>
+    		</div>
+  		</div>
+	</nav>
+	{% block content %}
+	{% endblock %}
 </body>
 </html>

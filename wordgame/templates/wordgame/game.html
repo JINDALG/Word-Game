@@ -1,14 +1,20 @@
-<!DOCTYPE html>
-<html>
+{% extends "wordgame/base.html" %}
 {% load staticfiles %}
-<head>
-	<title>game</title>
-	
-</head>
-<body>
- 	<h2><center>Hello {{user.username}}</center></h2>
- 	
- 	<button id='start_game'>start_game</button>
+{% block content %}
+
+	<div class="container">
+		<div class="jumbotron">
+			<h2>Hello {{user.username}} </h2>
+		</div>
+		<ul class="list-group">
+			<li class="list-group-item list-group-item-info">You will given 30 second for each question</li> 
+			<li class="list-group-item list-group-item-info">You can not access previous question after submitting</li>
+			<li class="list-group-item list-group-item-info">No negative marking</li>
+			<li class="list-group-item list-group-item-info">Four choice will be given for each question</li>
+		</ul>
+		<button id="start_game" class="btn btn-primary btn-lg">Start Game</button>
+	</div>
+
  	<div id='error_q'></div>
  	<div id='question'>
  		<div id="time"></div>
@@ -40,8 +46,4 @@
 	 	<input type="submit" id='submit'>
  		
  	</form>
- 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-	<script src="{% static 'wordgame/js/index.js' %}"></script>
-
-</body>
-</html>
+{% endblock %}

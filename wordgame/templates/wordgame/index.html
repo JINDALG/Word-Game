@@ -1,0 +1,33 @@
+{% extends "wordgame/base.html" %}
+{% load staticfiles %}
+{% block content %}
+	<div class="container">
+	
+		<div class="jumbotron">
+			<h2>CATFAT</h2>
+			<p>A platform for learning</p>	
+		</div>
+	
+			
+		<div class="rows">
+			<div class="col-md-4 col-sm-12">
+				<img src="{% static 'wordgame/images/index.png' %}" class="img-responsive" alt="Cinque Terre" style="height:300px;">
+			</div>
+			<div class="col-md-8 col-sm-12">
+				<h3>
+					<ul class="list-group">
+						<li class="list-group-item list-group-item-success">This is best portal for Cat preparation</li>
+						<li class="list-group-item list-group-item-success">You can learn with enjoy</li>
+						<li class="list-group-item list-group-item-success">All the facility is totally free</li>
+						<li class="list-group-item list-group-item-success">Practice is ssential for success</li>
+
+					</ul>
+				</h3>
+				<div class="pull-right"><a href="/wordgame/game"><button type="button" class="btn btn-primary btn-lg">Play Quiz</button></a></div>
+			</div>
+		</div>
+			
+	</div>
+	
+
+{% endblock %}

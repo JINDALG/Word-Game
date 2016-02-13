@@ -16,7 +16,7 @@ def login_check(request):
 
 def index(request):
 	user = login_check(request)
-	return render(request , 'wordgame/base.html' , {'user' : user})
+	return render(request , 'wordgame/index.html' , {'user' : user})
 
 def Authenticate(email,Password):
 	try :
