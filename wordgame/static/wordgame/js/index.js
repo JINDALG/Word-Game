@@ -30,7 +30,7 @@ function load_questions() {
 		success : function(q_data) {
 			$('#question').show()
 			$('#answer').hide()
-			$('#start_game').remove()
+			$('#start').remove()
 			console.log(q_data);
 			q_text = q_data.question
 			img_url = q_data.img
