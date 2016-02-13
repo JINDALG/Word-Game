@@ -54,7 +54,7 @@ function load_questions() {
 			$("#main_word").text('');
 			$("#sentence").text('');
 			$('input[type="radio"]').prop('checked', false);
-			remain_time =30
+			remain_time = 30
 			$('#time').text(remain_time)
 			time = setTimeout(function(){ 
 				if ($('#check').is(":visible")) {

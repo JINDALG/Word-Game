@@ -1,7 +1,6 @@
 {% extends "wordgame/base.html" %}
 {% load staticfiles %}
 {% block content %}
-
 	<div id="start">
 		<div class="container">
 			<div class="jumbotron">
@@ -16,23 +15,43 @@
 			<button id="start_game" class="btn btn-primary btn-lg">Start Game</button>
 		</div>
 	</div>
-	
  	<div id='question'>
- 		<div id="time"></div>
- 		<div><h2><center>Score : <span id='score'></span></center></h2></div>
- 		<div><h2><center id="q_text"></center></h2></div>
- 		<div><h2><center><img src="{{question.image_url}}" height="100" width="100"></center></h2></div>
- 		<form method="post" id="form">
- 			<input type="radio" name="answers" id='option1'>
- 			<label for="option1"></label>
- 			<input type="radio" name="answers" id='option2'>
- 			<label for="option2"></label>
- 			<input type="radio" name="answers" id='option3'>
- 			<label for="option3"></label>
- 			<input type="radio" name="answers" id='option4'>
- 			<label for="option4"></label>
- 			<input type="submit" value="Check" id="check">
- 		</form>
+ 		<div class="container">
+ 			<div id="time"></div>
+ 			<h2><center>Score : <span id='score'></span></center></h2>
+ 			<div class="rows">
+ 				<div class="col-md-6">
+ 					<img class="img-thumbnail" alt="Question" width="100%" height="" src="{{question.image_url}}">
+ 				</div>
+ 				<div class="col-md-6">
+ 					
+ 					<form role="form" method="post" id="form">
+ 						<div class="form-group">
+ 							<h3 id="q_text"></h3>
+ 						</div>
+ 						<div class="form-group">
+ 							<input type="radio" name="answers" id='option1'>
+ 							<label for="option1"></label>
+ 						</div>
+ 						<div class="form-group">
+ 							<input type="radio" name="answers" id='option2'>
+			 				<label for="option2"></label>
+ 						</div>
+ 						<div class="form-group">
+ 							<input type="radio" name="answers" id='option3'>
+				 			<label for="option3"></label>
+ 						</div>
+ 						<div class="form-group">
+ 							<input type="radio" name="answers" id='option4'>
+				 			<label for="option4"></label>
+ 						</div>
+ 						<div class="form-group">
+ 							<button type="submit" id="check" class="btn btn-primary btn-lg">Submit</button>
+ 						</div>
+ 					</form>
+ 				</div>
+ 			</div>
+ 		</div>
  	</div>
  	<div id='answer'>
  		<div><h2><center>Score :  <span id='score'></span></center></h2></div>
