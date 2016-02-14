@@ -1,72 +1,148 @@
-
 <!DOCTYPE html>
-<html >
-{% load staticfiles %}
+<html lang="en">
+  {% load staticfiles %}
   <head>
-    <meta charset="UTF-8">
-    <title>Word Game</title>
-    <link rel="stylesheet" href="{% static 'wordgame/css/reset.css' %}">
-    <link rel='stylesheet prefetch' href='http://fonts.googleapis.com/css?family=Roboto:400,100,300,500,700,900|RobotoDraft:400,100,300,500,700,900'>
-    <link rel='stylesheet prefetch' href='http://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css'>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- CSS -->
+    <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Roboto:400,100,300,500">
+    <link rel="stylesheet" type="text/css" href="{% static 'wordgame/css/bootstrap.min.css' %}" >
+    <link rel="stylesheet" href="{% static 'wordgame/css/font-awesome.min.css' %}">
+    <link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.4.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="{% static 'wordgame/css/form-elements.css' %}">
     <link rel="stylesheet" href="{% static 'wordgame/css/style.css' %}">
-    
+    <!-- JAVASCRIPT -->
+    <script type="text/javascript" src="{% static 'wordgame/js/jquery.js' %}"></script>
+    <script type="text/javascript" src="{% static 'wordgame/js/bootstrap.min.js' %}"></script>
+    <script type="text/javascript" src="{% static 'wordgame/js/scripts.js' %}"></script>
+
+    <link rel="shortcut icon" href="{% static 'wordgame/images/title.jpg' %}">
+    <link rel="shortcut icon" sizes="144x144" href="{% static 'wordgame/images/title.jpg' %}">
+    <link rel="shortcut icon" sizes="114x114" href="{% static 'wordgame/images/title.jpg' %}">
+    <link rel="shortcut icon" sizes="72x72" href="{% static 'wordgame/images/title.jpg' %}">
   </head>
 
   <body>
-
-    <div class="pen-title">
-      <h1>Login Form</h1>
-    </div>
-    <div class="container">
-      <div class="card"></div>
-      <div class="card">
-        <h1 class="title">Login</h1>
-        <form method="post" action="/wordgame/login/">
-          {% csrf_token %}
-          {% if errors %}
-            <div class="error">{{errors}}</div>
-          {% endif %}
-          {% for field in Login_fields %}
-            <div class="input-container">
-              <input id="{{ field.label }}" name="{{ field.name }}" type="{% if 'password' in field.name %}{{ 'password' }}{% else %}{{ 'text' }}{% endif %}" required="required"/>
-              <label for="{{ field.label }}"> {{ field.label }} </label>
-              <div class="bar"></div>
-            </div>
-          {% endfor %}
-          <div class="button-container">
-            <button type="submit" name="login"><span>Go</span></button>
-          </div>
-          <div class="footer"><a href="#">Forgot your password?</a></div>
-        </form>
-  </div>  
-
-
-  <div class="card alt">
-    <div class="toggle"></div>
-    <h1 class="title">Register
-      <div class="close"></div>
-    </h1>
-    <form method="post" action="/wordgame/register/">
-      {% csrf_token %}
-      {% if erorrs %}
-        <div class="error">{{errors}}</div>
-      {% endif %}
-      {% for field in Register_fields %}
-        <div class="input-container">
-          <input id="{{ field.label }}" name="{{ field.name }}" type="{% if 'word' in field.name %}{{ 'password' }}{% else %}{{ 'text' }}{% endif %}" required="required"/>
-          <label for="{{ field.label }}"> {{ field.label }} </label>
-          <div class="bar"></div>
+  <!-- Top content -->
+    <nav class="navbar navbar-inverse">
+      <div class="container-fluid">
+      <div class="navbar-header">
+          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span> 
+          </button>
+          <a class="navbar-brand" href="#">CATFAT</a>
         </div>
-      {% endfor %}
-      <div class="button-container">
-        <button type="submit" name="register"><span>Next</span></button>
+        <div class="collapse navbar-collapse" id="myNavbar">
+          <ul class="nav navbar-nav">
+            <li class="active"><a href="/">Home</a></li>
+          </ul>
+          <ul class="nav navbar-nav navbar-right">
+            <li><a href="/login"><span class="glyphicon"></span>Login</a></li>
+            <li><a href="/login"><span class="glyphicon"></span>SignUp</a></li>
+          </ul>
+        </div>
       </div>
-    </form>
-  </div>
-</div>
+    </nav>
+    <div class="top-content">
+    <div class="inner-bg">
+    <div class="container">         
+    <div class="row">
+    <div class="col-sm-5">
+      <div class="form-box">
+        <div class="form-top">
+          <div class="form-top-left">
+            <h3>Login to our site</h3>
+            <p>Enter Email and password to log on:</p>
+          </div>
+          <div class="form-top-right">
+            <i class="fa fa-key"></i>
+          </div>
+        </div>
+        <div class="form-bottom">
+          <form role="form" action="" method="post" class="login-form">
+            {% csrf_token %}
+            {% if method == 'login' and  error %}
+              <div class="error">{{error}}</div>
+            {% endif %}
+            <div class="form-group">
+              {% if method == 'login' and  errors %}
+                <div class="error">{{errors.email}}</div>
+              {% endif %}
+              <label class="sr-only" for="email">Email</label>
+              <input type="text" name="email" placeholder="Email..." class="form-username form-control" id="email">
+            </div>
+            <div class="form-group">
+              {% if method == 'login' and  errors %}
+                <div class="error">{{errors.password}}</div>
+              {% endif %}
+              <label class="sr-only" for="password">Password</label>
+              <input type="password" name="password" placeholder="Password..." class="form-password form-control" id="password">
+            </div>
+            <button type="submit" name="login" class="btn">Sign in!</button>
+          </form>
+        </div>
+      </div>    
+    </div>
 
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-
-        <script src="{% static 'wordgame/js/index.js' %}"></script>
+    <div class="col-sm-1 middle-border"></div>
+    <div class="col-sm-1"></div>
+    <div class="col-sm-5">
+      <div class="form-box">
+        <div class="form-top">
+          <div class="form-top-left">
+            <h3>Sign up now</h3>
+            <p>Fill in the form below to get instant access:</p>
+          </div>
+          <div class="form-top-right">
+            <i class="fa fa-pencil"></i>
+          </div>
+        </div>
+        <div class="form-bottom">
+        <form role="form" action="" method="post" class="registration-form">
+          {% csrf_token %}
+          {% if method == 'register' and  error %}
+            <div class="error">{{error}}</div>
+          {% endif %}
+          <div class="form-group">
+            {% if method == 'register' and  errors %}
+              <div class="error">{{errors.username}}</div>
+            {% endif %}
+            <label class="sr-only" for="form-first-name">Username</label>
+            <input type="text" name="username" placeholder="Username..." class="form-first-name form-control" id="form-first-name">
+          </div>
+          <div class="form-group">
+            {% if method == 'register' and  errors %}
+              <div class="error">{{errors.email}}</div>
+            {% endif %}
+            <label class="sr-only" for="form-email">Email</label>
+            <input type="text" name="email" placeholder="Email..." class="form-email form-control" id="form-email">
+          </div>
+          <div class="form-group">
+            {% if method == 'register' and  errors %}
+              <div class="error">{{errors.password}}</div>
+            {% endif %}
+            <label class="sr-only" for="password">Password</label>
+            <input type="password" name="password" placeholder="Password..." class="form-email form-control" id="password">
+          </div>
+          <div class="form-group">
+            {% if method == 'register' and  errors %}
+              <div class="error">{{errors.c_password}}</div>
+            {% endif %}
+            <label class="sr-only" for="password">Repeat Password</label>
+            <input type="password" name="c_password" placeholder="Confirm Password..." class="form-email form-control" id="password">
+          </div>
+          <button type="submit" name="register" class="btn">Sign me up!</button>
+        </form>
+        </div>
+      </div>
+    </div>
+    </div>
+    </div>
+    </div>
+    </div>
   </body>
+
 </html>

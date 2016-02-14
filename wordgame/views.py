@@ -35,7 +35,7 @@ class LoginView(View):
 		request.session['user'] = email
 	def get(self,request):
 		if login_check(request) :
-			return HttpResponseRedirect('/wordgame')
+			return HttpResponseRedirect('/')
 		return render(request , self.template , {'Login_fields' : self.Login_fields(), 'Register_fields' : self.Register_fields()})
 	def post(self,request):
 		if 'login' in request.POST:
@@ -46,7 +46,7 @@ class LoginView(View):
 				user = Authenticate(email,password)
 				if user:
 					self.login(request,email)
-					return HttpResponseRedirect('/wordgame')
+					return HttpResponseRedirect('/')
 				else:
 					print email
 					print password
@@ -54,14 +54,15 @@ class LoginView(View):
 					return render(request , self.template , {
 						'Login_fields' : form, 
 						'Register_fields' : self.Register_fields(),
-						'errors' : error,
+						'error' : error,
 						'method':'login'})
 			else :
 				error = form.errors
 				return render(request , self.template , {
 					'Login_fields' : form, 
 					'Register_fields' : self.Register_fields(),
-					'errors' : error.values()})
+					'errors' : error.values(),
+					'method':'login'})
 		elif 'register' in request.POST:
 			form = self.Register_fields(request.POST)
 			if form.is_valid():
@@ -74,27 +75,27 @@ class LoginView(View):
 					user = User(username = username, email = email, password = password)
 					user.save()
 					request.session['user'] = str(email)
-					return HttpResponseRedirect('/wordgame')
+					return HttpResponseRedirect('/')
 				else :
-					errors = "password does not match"
+					error = "password does not match"
 					return render(request, self.template, {
 						'Login_fields' : self.Login_fields(), 
 						'Register_fields' : form,
-						'register_error':errors,
+						'error':errors,
 						'method':'register'})
 			else :
 				error = form.errors
 				return render(request, self.template, {
 					'Login_fields' : self.Login_fields(), 
 					'Register_fields' : form,
-					'errors' : error.values(),
+					'errors' : error,
 					'method':'register'})
 def logout(request):
 	try:
 		del request.session['user']
 	except:
-		return HttpResponseRedirect('/wordgame')
-	return HttpResponseRedirect('/wordgame')
+		return HttpResponseRedirect('/')
+	return HttpResponseRedirect('/')
 
 seq = None
 count =None
@@ -126,9 +127,9 @@ def load_q(request):
 				content_type='application/json'
 			)
 		else:
-			return HttpResponseRedirect('/wordgame/game')
+			return HttpResponseRedirect('/game')
 	else : 
-		HttpResponseRedirect('/wordgame/game')
+		HttpResponseRedirect('/game')
 
 @csrf_exempt
 def check_ans(request):
@@ -142,14 +143,7 @@ def check_ans(request):
 				response = {}
 				question = Quiz.objects.get(question= q_text, image_url = img)
 				response = dict(u_answer = u_answer, img = img )
-				if u_answer == "None":
-					response['complement'] = 'Time out, try next question'
-					response['score'] = user.score
-					return HttpResponse(
-						json.dumps(response),
-						content_type = 'application/json'
-					)
-				elif u_answer == question.meaning :
+				if u_answer == question.meaning :
 					user.score += 1
 					user.save()
 					response['complement'] = 'Good Job you are right!'
@@ -162,19 +156,23 @@ def check_ans(request):
 						json.dumps(response),
 						content_type = 'application/json'
 					)
+				elif u_answer == "None":
+					response['complement'] = 'Time out, try next question'
 				else :
 					response['complement'] = 'Bad Guess, Better luck next time!'
-					response['score'] = user.score
-					return HttpResponse(
-						json.dumps(response),
-						content_type = 'application/json'
-					)
+
+				response['score'] = user.score
+				return HttpResponse(
+					json.dumps(response),
+					content_type = 'application/json'
+				)
+
 			except :
-				return HttpResponseRedirect('/wordgame/game')
+				return HttpResponseRedirect('/game')
 		else :
-			return HttpResponseRedirect('/wordgame/game')		
+			return HttpResponseRedirect('/game')		
 	else :
-		return HttpResponseRedirect('/wordgame/login')
+		return HttpResponseRedirect('/login')
 @csrf_exempt
 def game(request):
 	global seq
@@ -190,4 +188,4 @@ def game(request):
 			user.save()
 			return render(request, 'wordgame/game.html' , {'user' : user})
 	else :
-		return HttpResponseRedirect('/wordgame/login')
+		return HttpResponseRedirect('/login')

@@ -4,9 +4,14 @@
 <head>
 	<title>Wordgame</title>
 	<link rel="stylesheet" type="text/css" href="{% static 'wordgame/css/bootstrap.min.css' %}" >
+  <link rel="stylesheet" href="{% static 'wordgame/css/font-awesome.min.css' %}">
 	<script type="text/javascript" src="{% static 'wordgame/js/jquery.js' %}"></script>
 	<script type="text/javascript" src="{% static 'wordgame/js/bootstrap.min.js' %}"></script>
 	<script src="{% static 'wordgame/js/index.js' %}"></script>
+  <link rel="shortcut icon" href="{% static 'wordgame/images/title.jpg' %}">
+  <link rel="shortcut icon" sizes="144x144" href="{% static 'wordgame/images/title.jpg' %}">
+  <link rel="shortcut icon" sizes="114x114" href="{% static 'wordgame/images/title.jpg' %}">
+  <link rel="shortcut icon" sizes="72x72" href="{% static 'wordgame/images/title.jpg' %}">
 </head>
 <body>
 	<nav class="navbar navbar-inverse">
@@ -21,13 +26,13 @@
     		</div>
     		<div class="collapse navbar-collapse" id="myNavbar">
       			<ul class="nav navbar-nav">
-			        <li class="active"><a href="#">Home</a></li>
+			        <li class="active"><a href="/">Home</a></li>
      			</ul>
       			<ul class="nav navbar-nav navbar-right">
 			        {% if user %}<li><a href="#"><span class="glyphicon glyphicon-user"></span>{{ user.username }}</a></li>{% endif %}
-			        {% if user %}<li><a href="/wordgame/logout"><span class="glyphicon"></span>Logout</a></li>{% endif %}
-			        {% if not user %}<li><a href="/wordgame/login"><span class="glyphicon"></span>Login</a></li>{% endif %}
-			        {% if not user %}<li><a href="/wordgame/login"><span class="glyphicon"></span>SignUp</a></li>{% endif %}
+			        {% if user %}<li><a href="/logout"><span class="glyphicon"></span>Logout</a></li>{% endif %}
+			        {% if not user %}<li><a href="/login"><span class="glyphicon"></span>Login</a></li>{% endif %}
+			        {% if not user %}<li><a href="/login"><span class="glyphicon"></span>SignUp</a></li>{% endif %}
      	 		</ul>
     		</div>
   		</div>
