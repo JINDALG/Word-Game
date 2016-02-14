@@ -20,29 +20,28 @@
  			<div id="time"></div>
  			<h2><center>Score : <span id='score'></span></center></h2>
  			<div class="rows">
- 				<div class="col-md-6">
+ 				<div class="col-md-5">
  					<img class="img-thumbnail" alt="Question" width="100%" height="" src="{{question.image_url}}">
  				</div>
- 				<div class="col-md-6">
- 					
+ 				<div class="col-md-7">
  					<form role="form" method="post" id="form">
  						<div class="form-group">
  							<h3 id="q_text"></h3>
  						</div>
  						<div class="form-group">
- 							<input type="radio" name="answers" id='option1'>
+ 							<input type="radio" name="answers" id='option1' required="required">
  							<label for="option1"></label>
  						</div>
  						<div class="form-group">
- 							<input type="radio" name="answers" id='option2'>
+ 							<input type="radio" name="answers" id='option2' required="required">
 			 				<label for="option2"></label>
  						</div>
  						<div class="form-group">
- 							<input type="radio" name="answers" id='option3'>
+ 							<input type="radio" name="answers" id='option3' required="required">
 				 			<label for="option3"></label>
  						</div>
  						<div class="form-group">
- 							<input type="radio" name="answers" id='option4'>
+ 							<input type="radio" name="answers" id='option4' required="required">
 				 			<label for="option4"></label>
  						</div>
  						<div class="form-group">
@@ -54,16 +53,23 @@
  		</div>
  	</div>
  	<div id='answer'>
- 		<div><h2><center>Score :  <span id='score'></span></center></h2></div>
- 		<div><h2><center id='complement'></center></h2></div>
- 		<div><h2><center id='full_answer'></center></h2></div>
- 		<div><h2><center><img src="" height="100" width="100"></center></h2></div>
- 		<div><h2><center id='main_word'></center></h2></div>
- 		<div><h2><center id='sentence'></center></h2></div>
- 		<button id='next' type="submit">Next</button>
+ 		<h2><center>Score : <span id='score'></span></center></h2>
+ 		<div class="container">
+ 			<div><h2><center id='complement'></center></h2></div>
+	 		<div class="rows">
+	 			<div class="col-md-5">
+	 				<img class="img-thumbnail" alt="Answer" src="">
+	 			</div>
+	 			<div class="col-md-7">
+	 				<h3 id='word'></h3>
+	 				<h3 id='main_word'></h3>
+	 				<h3 id='full_answer'></h3>
+			 		<h3 id='sentence'></h3>
+			 		<form method="post">
+			 			<button id='next' type="submit" class="btn btn-primary btn-lg">Next Question</button>
+			 		</form>
+	 			</div>
+	 		</div>
+	 	</div>
  	</div>
- 	<form method="post">
-	 	<input type="submit" id='submit'>
- 		
- 	</form>
 {% endblock %}

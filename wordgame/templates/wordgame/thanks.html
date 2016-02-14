@@ -1,11 +1,11 @@
-<!DOCTYPE html>
-<html>
-<head>
-	<title>WORD GAME</title>
-	
-</head>
-<body>
-	<center><h2>Thnaks you complete the game</h2></center>
-	<center><h2>Your score is {{user.score}}</h2></center>
-</body>
-</html>
+{% extends "wordgame/base.html" %}
+{% load staticfiles %}
+{% block content %}
+	<div class="container">
+		<div class="jumbotron">
+			<h1>Thanks {{user.username}}</h1>
+			<h1>Your Score is: {{user.score}}</h1>
+			<h1><a href="/wordgame/game/">Start Again</a></h1>
+		</div>
+	</div>
+{% endblock %}

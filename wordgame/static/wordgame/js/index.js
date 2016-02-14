@@ -58,7 +58,7 @@ function load_questions() {
 			$('#time').text(remain_time)
 			time = setTimeout(function(){ 
 				if ($('#check').is(":visible")) {
-					$('#check').click()
+					check_answer('None')
 				}
 					 }, 30000);
 
@@ -76,15 +76,12 @@ function load_questions() {
 	})
 }
 $('#check').on('click',function(event) {
-	event.preventDefault();
 	u_answer = null
 	if($("input:radio[name='answers']").is(":checked")) {
+		event.preventDefault();
 		u_answer = $('input:radio[name=answers]:checked').val()
+		check_answer(u_answer);
 	}
-	else {
-		u_answer = 'None'
-	}
-	check_answer(u_answer);
 })
 
 function check_answer(u_answer) {
@@ -100,10 +97,10 @@ function check_answer(u_answer) {
 			console.log('hello');
 			$('#question').hide()
 			$('#answer').show()
-			console.log(check_response.u_answer);
 			$("#answer img").attr("src",check_response.img);
 			$("#answer #score").text(check_response.score);
 			$("#complement").text(check_response.complement);
+			$("#word").text(check_response.question);
 			$("#full_answer").text(check_response.answer);
 			$("#main_word").text(check_response.main_word);
 			$("#sentence").text(check_response.sentence);
@@ -123,10 +120,6 @@ $('#next').on('click',function(event) {
 	if (count < 3 ) {
 		event.preventDefault();
 		load_questions();
-	}
-	else {
-		$('#answer').remove()
-		$('#submit').show()
 	}
 })
 });

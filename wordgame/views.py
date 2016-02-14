@@ -66,6 +66,7 @@ class LoginView(View):
 			form = self.Register_fields(request.POST)
 			if form.is_valid():
 				username = request.POST.get('username')
+				username = username.capitalize()
 				email = request.POST.get('email')
 				password = request.POST.get('password')
 				c_password = request.POST.get('c_password')
@@ -152,9 +153,10 @@ def check_ans(request):
 					user.score += 1
 					user.save()
 					response['complement'] = 'Good Job you are right!'
-					response['answer'] = question.question + question.meaning
-					response['sentence'] = question.sentence
-					response['main_word'] = question.main_word
+					response['question'] = "Given Word: " +  question.question
+					response['answer'] = "Meaning: " + question.meaning
+					response['sentence'] =  "sentence: " + question.sentence
+					response['main_word'] = "Main Word: " + question.main_word
 					response['score'] = user.score
 					return HttpResponse(
 						json.dumps(response),
@@ -182,10 +184,10 @@ def game(request):
 	user = login_check(request)
 	if user :
 		if request.method == 'POST':
-			return HttpResponse('Hello: ' + user.username + '<br>' + 'Your score is : ' + str(user.score))	
+			return render(request, 'wordgame/thanks.html', {'user' : user})
 		else :
 			user.score = 0
 			user.save()
-			return render(request , 'wordgame/game.html' , {'user' : user})
+			return render(request, 'wordgame/game.html' , {'user' : user})
 	else :
 		return HttpResponseRedirect('/wordgame/login')
