@@ -46,7 +46,6 @@ $(window).load(function(){
 				$('label[for="option3"]').text(q_data.option3)
 				$('#option4').val(q_data.option4)
 				$('label[for="option4"]').text(q_data.option4)
-				console.log('success')
 				$("#answer img").attr("src",'');
 				$("#answer #score").text('');
 				$("#complement").text('');
@@ -87,14 +86,13 @@ $(window).load(function(){
 	function check_answer(u_answer) {
 		clearTimeout(time)
 		clearInterval(interval)
-		console.log('data is loading');
 		$.ajax({
 			url : 'check_ans/',
 			type : 'POST',
 			data : {q_text : q_text, img : img_url, u_answer : u_answer },
 
 			success : function(check_response) {
-				console.log('hello');
+				console.log(check_response);
 				$('#question').hide()
 				$('#answer').show()
 				$("#answer img").attr("src",check_response.img);

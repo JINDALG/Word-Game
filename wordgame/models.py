@@ -11,7 +11,7 @@ class Quiz(models.Model):
 	question  = models.CharField(max_length=100)
 	sentence  = models.CharField(max_length=200)
 	meaning   = models.CharField(max_length=100)
-	image_url = models.CharField(max_length=100)
+	image_url = models.ImageField(upload_to = 'img/')
 
 	def __unicode__(self):
 		return self.main_word

@@ -109,23 +109,28 @@ def load_q(request):
 			# if count == 3 :
 			# 	return render(request, 'wordgame/thanks.html', {'user' : user})
 			if count == 0:
-				seq = random.sample(range(1,4),3)
-			q = Quiz.objects.get(pk=seq[count])
-			response = {}
-			options = random.sample(range(1,5),4)
-			count +=1 
-			i=1
-			for option in options:
-				response['option'+str(i)] = Quiz.objects.get(pk = option).meaning
-				i += 1
-			response['img'] = q.image_url
-			response['question'] = q.question
-			response['count'] = count
-			response['score'] = user.score
-			return HttpResponse(
-				json.dumps(response),
-				content_type='application/json'
-			)
+				seq = random.sample(range(1,5),4)
+			try :
+				q = Quiz.objects.get(pk=seq[count])
+				response = {}
+				options = random.sample(range(1,5),4)
+				i=1
+				for option in options:
+					response['option'+str(i)] = Quiz.objects.get(pk = option).meaning
+					i += 1
+				response['img'] = str(q.image_url.url)
+				response['question'] = q.question
+				response['count'] = count
+				response['score'] = user.score
+				return HttpResponse(
+					json.dumps(response),
+					content_type='application/json'
+				)
+			except :
+				return HttpResponse(
+					json.dumps(dict(error = 'error')),
+					content_type='application/json'
+				)
 		else:
 			return HttpResponseRedirect('/game')
 	else : 
@@ -135,21 +140,24 @@ def load_q(request):
 def check_ans(request):
 	user = login_check(request)
 	if user :
+		global seq
+		global count
 		if request.method == 'POST':
 			try:
-				q_text = request.POST.get('q_text')
-				img = request.POST.get('img')
+				# q_text = request.POST.get('q_text')
+				# img = request.POST.get('img')
 				u_answer = request.POST.get('u_answer')
-				response = {}
-				question = Quiz.objects.get(question= q_text, image_url = img)
-				response = dict(u_answer = u_answer, img = img )
+				question = Quiz.objects.get(pk=seq[count])
+				count += 1
+				response = dict(u_answer = u_answer)
+				response['img'] = str(question.image_url.url)
 				if u_answer == question.meaning :
 					user.score += 1
 					user.save()
 					response['complement'] = 'Good Job you are right!'
 					response['question'] = "Given Word: " +  question.question
 					response['answer'] = "Meaning: " + question.meaning
-					response['sentence'] =  "sentence: " + question.sentence
+					response['sentence'] =  "Sentence: " + question.sentence
 					response['main_word'] = "Main Word: " + question.main_word
 					response['score'] = user.score
 					return HttpResponse(
@@ -177,7 +185,6 @@ def check_ans(request):
 def game(request):
 	global seq
 	global count
-	seq = None
 	count = 0
 	user = login_check(request)
 	if user :
