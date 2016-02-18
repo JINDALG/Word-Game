@@ -99,28 +99,28 @@ def logout(request):
 
 seq = None
 count =None
+slot_size = None
 @csrf_exempt
 def load_q(request):
 	user  = login_check(request)
 	if user :
 		global seq
-		global count
+		global count,slot_size
 		if request.method =='POST' :
-			# if count == 3 :
-			# 	return render(request, 'wordgame/thanks.html', {'user' : user})
 			if count == 0:
-				seq = random.sample(range(1,5),4)
+				slot_size = 3
+				seq = random.sample(range(1,len(Quiz.objects.all())+1),slot_size)
 			try :
 				q = Quiz.objects.get(pk=seq[count])
 				response = {}
-				options = random.sample(range(1,5),4)
+				options = random.sample(range(1,len(Quiz.objects.all())+1),4)
 				i=1
 				for option in options:
 					response['option'+str(i)] = Quiz.objects.get(pk = option).meaning
 					i += 1
 				response['img'] = str(q.image_url.url)
-				response['question'] = q.question
-				response['count'] = count
+				response['word'] = str(q.word)
+				print q.word
 				response['score'] = user.score
 				return HttpResponse(
 					json.dumps(response),
@@ -141,24 +141,24 @@ def check_ans(request):
 	user = login_check(request)
 	if user :
 		global seq
-		global count
+		global count,slot_size
 		if request.method == 'POST':
 			try:
-				# q_text = request.POST.get('q_text')
-				# img = request.POST.get('img')
 				u_answer = request.POST.get('u_answer')
 				question = Quiz.objects.get(pk=seq[count])
+				response = dict(u_answer = u_answer,count = count+1)
 				count += 1
-				response = dict(u_answer = u_answer)
 				response['img'] = str(question.image_url.url)
+				response['slot_size'] = slot_size
+				response['word'] = "Word: " + question.word
 				if u_answer == question.meaning :
 					user.score += 1
 					user.save()
 					response['complement'] = 'Good Job you are right!'
-					response['question'] = "Given Word: " +  question.question
-					response['answer'] = "Meaning: " + question.meaning
+					response['phrase'] = "Phrase: " +  question.phrase
+					response['meaning'] = "Meaning: " + question.meaning
 					response['sentence'] =  "Sentence: " + question.sentence
-					response['main_word'] = "Main Word: " + question.main_word
+					
 					response['score'] = user.score
 					return HttpResponse(
 						json.dumps(response),
@@ -174,7 +174,6 @@ def check_ans(request):
 					json.dumps(response),
 					content_type = 'application/json'
 				)
-
 			except :
 				return HttpResponseRedirect('/game')
 		else :
@@ -183,7 +182,6 @@ def check_ans(request):
 		return HttpResponseRedirect('/login')
 @csrf_exempt
 def game(request):
-	global seq
 	global count
 	count = 0
 	user = login_check(request)

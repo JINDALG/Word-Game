@@ -7,14 +7,14 @@ from django.core.validators import RegexValidator
 # Create your models here.
 
 class Quiz(models.Model):
-	main_word = models.CharField(max_length=20)
-	question  = models.CharField(max_length=100)
-	sentence  = models.CharField(max_length=200)
+	word = models.CharField(max_length=20)
 	meaning   = models.CharField(max_length=100)
+	phrase  = models.CharField(max_length=100)
+	sentence  = models.CharField(max_length=200)
 	image_url = models.ImageField(upload_to = 'img/')
 
 	def __unicode__(self):
-		return self.main_word
+		return self.word
 
 
 class User(models.Model):

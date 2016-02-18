@@ -1,17 +1,5 @@
 $(window).load(function(){
 
-	$('.toggle').on('click', function() {
-	  $('.container').stop().addClass('active');
-	});
-
-	$('.close').on('click', function() {
-	  $('.container').stop().removeClass('active');
-	});
-
-	error = $('.error').text();
-	if (error) {
-		$('.container').stop().addClass('active');
-	}
 	$('#start_game').on('click',function(event) {
 		event.preventDefault();
 		load_questions();
@@ -19,8 +7,6 @@ $(window).load(function(){
 	$('#submit').hide()
 	$('#question').hide()
 	$('#answer').hide()
-	var q_text
-	var img_url
 	var count
 	var interval,time
 	function load_questions() {
@@ -32,11 +18,8 @@ $(window).load(function(){
 				$('#answer').hide()
 				$('#start').remove()
 				console.log(q_data);
-				q_text = q_data.question
-				img_url = q_data.img
-				count = q_data.count
 				$("#question img").attr("src",q_data.img);
-				$("#q_text").text(q_data.question);
+				$("#question #word").text(q_data.word);
 				$('#question #score').text(q_data.score)
 				$('#option1').val(q_data.option1)
 				$('label[for="option1"]').text(q_data.option1)
@@ -46,12 +29,10 @@ $(window).load(function(){
 				$('label[for="option3"]').text(q_data.option3)
 				$('#option4').val(q_data.option4)
 				$('label[for="option4"]').text(q_data.option4)
-				$("#answer img").attr("src",'');
-				$("#answer #score").text('');
-				$("#complement").text('');
-				$("#full_answer").text('');
-				$("#main_word").text('');
+				$("#meaning").text('');
+				//$("#answer #word").text('');
 				$("#sentence").text('');
+				$("#phrase").text('');
 				$('input[type="radio"]').prop('checked', false);
 				remain_time = 30
 				$('#time').text(remain_time)
@@ -60,14 +41,11 @@ $(window).load(function(){
 						check_answer('None')
 					}
 						 }, 30000);
-
 				interval =  setInterval(function(){
 					remain_time -= 1
 					$('#time').text(remain_time)
 				},1000);
-				
 			},
-
 			error : function(xhr,errmsg,err) {
 				$('#error_q').val('question not load')
 				console.log(xhr.status + ' : ' + xhr.responseText);
@@ -82,26 +60,28 @@ $(window).load(function(){
 			check_answer(u_answer);
 		}
 	})
-
+var slot
 	function check_answer(u_answer) {
 		clearTimeout(time)
 		clearInterval(interval)
 		$.ajax({
 			url : 'check_ans/',
 			type : 'POST',
-			data : {q_text : q_text, img : img_url, u_answer : u_answer },
-
+			data : {u_answer : u_answer },
 			success : function(check_response) {
 				console.log(check_response);
+				count = check_response.count
 				$('#question').hide()
 				$('#answer').show()
 				$("#answer img").attr("src",check_response.img);
 				$("#answer #score").text(check_response.score);
 				$("#complement").text(check_response.complement);
-				$("#word").text(check_response.question);
-				$("#full_answer").text(check_response.answer);
-				$("#main_word").text(check_response.main_word);
+				$("#answer #phrase").text(check_response.phrase);
+				$("#meaning").text(check_response.meaning);
+				$("#answer #word").text(check_response.word);
 				$("#sentence").text(check_response.sentence);
+				slot = check_response.slot_size
+				count = check_response.count
 				console.log('success')
 			},
 
@@ -112,7 +92,7 @@ $(window).load(function(){
 		})
 	}
 	$('#next').on('click',function(event) {
-		if (count < 3 ) {
+		if (count < slot ) {
 			event.preventDefault();
 			load_questions();
 		}
