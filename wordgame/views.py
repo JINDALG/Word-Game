@@ -26,6 +26,14 @@ def Authenticate(email,Password):
 		return None
 	except :
 		return None
+
+class profile(View):
+	template = 'wordgame/profile.html'
+	def get(self,request,user_id):
+		user = login_check(request)
+		if user:
+			return render(request, self.template, {'user' : user})
+		return HttpResponseRedirect('/')
 		
 class LoginView(View):
 	template = 'wordgame/login.html'
@@ -187,7 +195,16 @@ def game(request):
 	user = login_check(request)
 	if user :
 		if request.method == 'POST':
-			return render(request, 'wordgame/thanks.html', {'user' : user})
+			if user.score != -1:
+				if user.total_score == '0':
+					user.total_score = str(user.score)
+				else :
+					user.total_score += ',' + str(user.score)
+				user.score = -1
+			user.save()
+			score = user.total_score
+			score = score.split()[-1]
+			return render(request, 'wordgame/thanks.html', {'user' : user,'score':score})
 		else :
 			user.score = 0
 			user.save()

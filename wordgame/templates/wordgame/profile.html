@@ -1,0 +1,32 @@
+{% extends "wordgame/base.html" %}
+{% load staticfiles %}
+{% block content %}
+	<div class="container">
+		<div class="jumbotron">Hello : {{user.username}}</div>
+    	<div id="graph" style="width: 1200px; height: 500px;">{{user.total_score}}</div>
+	</div>
+	<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+	<script type="text/javascript">
+      google.charts.load('current', {'packages':['corechart']});
+      google.charts.setOnLoadCallback(drawChart);
+      var num = $("#graph").text().split(",")
+      var len = num.length;
+      var grdata = [["Attenped","score"]]
+      for (i=0;i<len;i++){
+      	grdata.push([i+1,parseInt(num[i])])
+      }
+      function drawChart() {
+        var data = google.visualization.arrayToDataTable(grdata)
+
+        var options = {
+          title: 'Your Performance',
+          curveType: 'function',
+          legend: { position: 'top' }
+        };
+
+        var chart = new google.visualization.LineChart(document.getElementById('graph'));
+
+        chart.draw(data, options);
+      }
+    </script>
+{% endblock %}
