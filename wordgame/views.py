@@ -29,11 +29,12 @@ def Authenticate(email,Password):
 
 class profile(View):
 	template = 'wordgame/profile.html'
-	def get(self,request,user_id):
-		user = login_check(request)
-		if user:
+	def get(self,request,user_name):
+		try :
+			user = User.objects.get(username = user_name.capitalize())
 			return render(request, self.template, {'user' : user})
-		return HttpResponseRedirect('/')
+		except:
+			return HttpResponseRedirect('/')
 		
 class LoginView(View):
 	template = 'wordgame/login.html'
@@ -127,9 +128,9 @@ def load_q(request):
 					response['option'+str(i)] = Quiz.objects.get(pk = option).meaning
 					i += 1
 				response['img'] = str(q.image_url.url)
-				response['word'] = str(q.word)
+				response['word'] = str(q.word).capitalize()
 				print q.word
-				response['score'] = user.score
+				#response['score'] = user.score
 				return HttpResponse(
 					json.dumps(response),
 					content_type='application/json'
@@ -166,8 +167,7 @@ def check_ans(request):
 					response['phrase'] = "Phrase: " +  question.phrase
 					response['meaning'] = "Meaning: " + question.meaning
 					response['sentence'] =  "Sentence: " + question.sentence
-					
-					response['score'] = user.score
+					#response['score'] = user.score
 					return HttpResponse(
 						json.dumps(response),
 						content_type = 'application/json'
@@ -203,8 +203,8 @@ def game(request):
 				user.score = -1
 			user.save()
 			score = user.total_score
-			score = score.split()[-1]
-			return render(request, 'wordgame/thanks.html', {'user' : user,'score':score})
+			score = score.split(',')[-1]
+			return render(request, 'wordgame/thanks.html', {'user' : user,'score' : score})
 		else :
 			user.score = 0
 			user.save()

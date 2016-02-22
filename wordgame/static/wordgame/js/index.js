@@ -20,7 +20,7 @@ $(window).load(function(){
 				console.log(q_data);
 				$("#question img").attr("src",q_data.img);
 				$("#question #word").text(q_data.word);
-				$('#question #score').text(q_data.score)
+				// $('#question #score').text(q_data.score)
 				$('#option1').val(q_data.option1)
 				$('label[for="option1"]').text(q_data.option1)
 				$('#option2').val(q_data.option2)
@@ -74,7 +74,7 @@ var slot
 				$('#question').hide()
 				$('#answer').show()
 				$("#answer img").attr("src",check_response.img);
-				$("#answer #score").text(check_response.score);
+				// $("#answer #score").text(check_response.score);
 				$("#complement").text(check_response.complement);
 				$("#answer #phrase").text(check_response.phrase);
 				$("#meaning").text(check_response.meaning);

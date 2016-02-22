@@ -17,16 +17,20 @@
 	</div>
  	<div id='question'>
  		<div class="container">
- 			<div id="time"></div>
- 			<h2><center>Score : <span id='score'></span></center></h2>
+
+ 			
+ 				<div id="time">&nbsp;</div>
+ 			
+ 			<!-- <h2><center>Score : <span id='score'></span></center></h2> -->
+ 			<div><h2><center id="word"></center></h2></div>
  			<div class="rows">
  				<div class="col-md-5">
- 					<img class="img-thumbnail" alt="Question" width="100%" height="" src="">
+ 					<img class="img-thumbnail" alt="Question" width="400px" height="400px" src="">
  				</div>
  				<div class="col-md-7">
  					<form role="form" method="post" id="form">
  						<div class="form-group">
- 							<h3 id="word"></h3>
+ 							
  						</div>
  						<div class="form-group">
  							<input type="radio" name="answers" id='option1' required="required">
@@ -53,12 +57,14 @@
  		</div>
  	</div>
  	<div id='answer'>
- 		<h2><center>Score : <span id='score'></span></center></h2>
+ 		<!-- <h2><center>Score : <span id='score'></span></center></h2> -->
+
  		<div class="container">
+ 			<div id="time"></div>
  			<div><h2><center id='complement'></center></h2></div>
 	 		<div class="rows">
 	 			<div class="col-md-5">
-	 				<img class="img-thumbnail" alt="Answer" src="">
+	 				<img class="img-thumbnail" width="400px" height="400px" alt="Answer" src="">
 	 			</div>
 	 			<div class="col-md-7">
 	 				<h3 id='word'></h3>

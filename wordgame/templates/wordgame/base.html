@@ -29,7 +29,7 @@
 			        <li class="active"><a href="/">Home</a></li>
      			</ul>
       			<ul class="nav navbar-nav navbar-right">
-			        {% if user %}<li><a href="/{{user.id}}"><span class="glyphicon glyphicon-user"></span>{{ user.username }}</a></li>{% endif %}
+			        {% if user %}<li><a href="/{{user.username}}"><span class="glyphicon glyphicon-user"></span>{{ user.username }}</a></li>{% endif %}
 			        {% if user %}<li><a href="/logout"><span class="glyphicon"></span>Logout</a></li>{% endif %}
 			        {% if not user %}<li><a href="/login"><span class="glyphicon"></span>Login</a></li>{% endif %}
 			        {% if not user %}<li><a href="/login"><span class="glyphicon"></span>SignUp</a></li>{% endif %}
