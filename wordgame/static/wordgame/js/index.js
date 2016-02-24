@@ -11,7 +11,7 @@ $(window).load(function(){
 	var interval,time
 	function load_questions() {
 		$.ajax({
-			url : 'load_q/',
+			url : '/game/load_q',
 			type : 'POST',
 			success : function(q_data) {
 				$('#question').show()
@@ -65,7 +65,7 @@ var slot
 		clearTimeout(time)
 		clearInterval(interval)
 		$.ajax({
-			url : 'check_ans/',
+			url : '/game/check_ans',
 			type : 'POST',
 			data : {u_answer : u_answer },
 			success : function(check_response) {

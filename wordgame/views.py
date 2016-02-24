@@ -31,8 +31,9 @@ class profile(View):
 	template = 'wordgame/profile.html'
 	def get(self,request,user_name):
 		try :
-			user = User.objects.get(username = user_name.capitalize())
-			return render(request, self.template, {'user' : user})
+			puser = User.objects.get(username = user_name.capitalize())
+			user = login_check(request)
+			return render(request, self.template, {'puser' : puser,'user' : user})
 		except:
 			return HttpResponseRedirect('/')
 		

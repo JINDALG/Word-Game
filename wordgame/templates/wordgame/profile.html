@@ -2,8 +2,8 @@
 {% load staticfiles %}
 {% block content %}
 	<div class="container">
-		<div class="jumbotron">Hello : {{user.username}}</div>
-    	<div id="score" style="visibility: hidden;">{{user.total_score}}</div>
+		<div class="jumbotron">{{puser.username}}</div>
+    	<div id="score" style="visibility: hidden;">{{puser.total_score}}</div>
     	<div id="graph" style="width: 1200px; height: 400px;"></div>
 	</div>
 	<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
@@ -20,9 +20,18 @@
         var data = google.visualization.arrayToDataTable(grdata)
 
         var options = {
+          hAxis: {
+            title: 'Quiz Attenped'
+          },
+          vAxis: {
+            title: 'Marks obtained'
+          },
+
           title: 'Your Performance',
-          curveType: 'function',
-          legend: { position: 'top' }
+          legend: { position: 'top' },
+          series: {
+            1: {curveType: 'function'}
+          }
         };
 
         var chart = new google.visualization.LineChart(document.getElementById('graph'));

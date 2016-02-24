@@ -25,7 +25,7 @@ from django.conf.urls.static import static
 
 urlpatterns = patterns('',
     url(r'^admin/', admin.site.urls),
-    url(r'^', include('wordgame.urls')),
+    url(r'', include('wordgame.urls')),
 ) 
 
 urlpatterns += patterns('',
