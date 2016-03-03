@@ -108,7 +108,7 @@ def logout(request):
 	return HttpResponseRedirect('/')
 
 seq = None
-count =None
+count = None
 slot_size = None
 @csrf_exempt
 def load_q(request):
@@ -117,11 +117,12 @@ def load_q(request):
 		global seq
 		global count,slot_size
 		if request.method =='POST' :
-			if count == 0:
+			if request.session['count'] == 0:
 				slot_size = 3
-				seq = random.sample(range(1,len(Quiz.objects.all())+1),slot_size)
+				request.session['seq'] = random.sample(range(1,len(Quiz.objects.all())+1),slot_size)
 			try :
-				q = Quiz.objects.get(pk=seq[count])
+				seqe = request.session['seq']
+				q = Quiz.objects.get(pk=seqe[request.session['count']])
 				response = {}
 				options = random.sample(range(1,len(Quiz.objects.all())+1),4)
 				i=1
@@ -155,9 +156,10 @@ def check_ans(request):
 		if request.method == 'POST':
 			try:
 				u_answer = request.POST.get('u_answer')
-				question = Quiz.objects.get(pk=seq[count])
-				response = dict(u_answer = u_answer,count = count+1)
-				count += 1
+				sequ = request.session['seq']
+				question = Quiz.objects.get(pk=sequ[request.session['count']])
+				response = dict(u_answer = u_answer,count = request.session['count']+1)
+				request.session['count'] +=1
 				response['img'] = str(question.image_url.url)
 				response['slot_size'] = slot_size
 				response['word'] = "Word: " + question.word
@@ -205,8 +207,15 @@ def game(request):
 			user.save()
 			score = user.total_score
 			score = score.split(',')[-1]
+			del request.session['count']
+			del request.session['seq']
 			return render(request, 'wordgame/thanks.html', {'user' : user,'score' : score})
 		else :
+			try :
+				print request.session['count']
+			except:
+				request.session['score'] = 0
+				request.session['count'] = 0
 			user.score = 0
 			user.save()
 			return render(request, 'wordgame/game.html' , {'user' : user})
