@@ -72,7 +72,7 @@
                 <div class="error">{{errors.email}}</div>
               {% endif %}
               <label class="sr-only" for="email">Email</label>
-              <input type="text" name="email" placeholder="Email..." class="form-username form-control" id="email">
+              <input type="email" name="email" placeholder="Email..." class="form-username form-control" id="email" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$" title="Enter a valid email">
             </div>
             <div class="form-group">
               {% if method == 'login' and  errors %}
@@ -111,14 +111,14 @@
               <div class="error">{{errors.username}}</div>
             {% endif %}
             <label class="sr-only" for="form-first-name">Username</label>
-            <input type="text" name="username" placeholder="Username..." class="form-first-name form-control" id="form-first-name">
+            <input type="text" name="username" placeholder="Username..." class="form-first-name form-control" id="form-first-name" pattern="[A-Z a-z]{3,20}">
           </div>
           <div class="form-group">
             {% if method == 'register' and  errors %}
               <div class="error">{{errors.email}}</div>
             {% endif %}
             <label class="sr-only" for="form-email">Email</label>
-            <input type="text" name="email" placeholder="Email..." class="form-email form-control" id="form-email">
+            <input type="email" name="email" placeholder="Email..." class="form-email form-control" id="form-email" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$" title="Enter a valid email">
           </div>
           <div class="form-group">
             {% if method == 'register' and  errors %}
