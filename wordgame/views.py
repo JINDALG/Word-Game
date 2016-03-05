@@ -58,21 +58,15 @@ class LoginView(View):
 					self.login(request,email)
 					return HttpResponseRedirect('/')
 				else:
-					print email
-					print password
 					error = "username and password does not match"
 					return render(request , self.template , {
-						'Login_fields' : form, 
-						'Register_fields' : self.Register_fields(),
-						'error' : error,
-						'method':'login'})
+						'Login' : form, 
+						'Login_error' : error})
 			else :
 				error = form.errors
 				return render(request , self.template , {
-					'Login_fields' : form, 
-					'Register_fields' : self.Register_fields(),
-					'errors' : error.values(),
-					'method':'login'})
+					'Login' : form, 
+					'Login_errors' : error.values(),})
 		elif 'register' in request.POST:
 			form = self.Register_fields(request.POST)
 			if form.is_valid():
@@ -87,19 +81,15 @@ class LoginView(View):
 					request.session['user'] = str(email)
 					return HttpResponseRedirect('/')
 				else :
-					error = "password does not match"
+					error = "Password does not match"
 					return render(request, self.template, {
-						'Login_fields' : self.Login_fields(), 
-						'Register_fields' : form,
-						'error':errors,
-						'method':'register'})
+						'Register' : form,
+						'register_error':error})
 			else :
 				error = form.errors
 				return render(request, self.template, {
-					'Login_fields' : self.Login_fields(), 
-					'Register_fields' : form,
-					'errors' : error,
-					'method':'register'})
+					'Register' : form,
+					'register_errors' : error})
 def logout(request):
 	try:
 		del request.session['user']

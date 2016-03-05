@@ -64,19 +64,19 @@
         <div class="form-bottom">
           <form role="form" action="" method="post" class="login-form">
             {% csrf_token %}
-            {% if method == 'login' and  error %}
-              <div class="error">{{error}}</div>
+            {% if Login_error %}
+              <div class="error">{{Login_error}}</div>
             {% endif %}
             <div class="form-group">
-              {% if method == 'login' and  errors %}
-                <div class="error">{{errors.email}}</div>
+              {% if Login_errors %}
+                <div class="error">{{Login_errors.email}}</div>
               {% endif %}
               <label class="sr-only" for="email">Email</label>
-              <input type="email" name="email" placeholder="Email..." class="form-username form-control" id="email" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$" title="Enter a valid email">
+              <input type="text" name="email" placeholder="Email..." class="form-username form-control" id="email" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$" title="Enter a valid email" value="{{Login.email.value}}">
             </div>
             <div class="form-group">
-              {% if method == 'login' and  errors %}
-                <div class="error">{{errors.password}}</div>
+              {% if Login_errors %}
+                <div class="error">{{Login_errors.password}}</div>
               {% endif %}
               <label class="sr-only" for="password">Password</label>
               <input type="password" name="password" placeholder="Password..." class="form-password form-control" id="password">
@@ -103,33 +103,33 @@
         <div class="form-bottom">
         <form role="form" action="" method="post" class="registration-form">
           {% csrf_token %}
-          {% if method == 'register' and  error %}
-            <div class="error">{{error}}</div>
+          {% if register_error %}
+            <div class="error">{{register_error}}</div>
           {% endif %}
           <div class="form-group">
-            {% if method == 'register' and  errors %}
-              <div class="error">{{errors.username}}</div>
+            {% if register_errors %}
+              <div class="error">{{register_errors.username}}</div>
             {% endif %}
             <label class="sr-only" for="form-first-name">Username</label>
-            <input type="text" name="username" placeholder="Username..." class="form-first-name form-control" id="form-first-name" pattern="[A-Z a-z]{3,20}">
+            <input type="text" name="username" placeholder="Username..." class="form-first-name form-control" id="form-first-name" pattern="[A-Z a-z]{3,20}" value="{{Register.username.value}}">
           </div>
           <div class="form-group">
-            {% if method == 'register' and  errors %}
-              <div class="error">{{errors.email}}</div>
+            {% if register_errors %}
+              <div class="error">{{register_errors.email}}</div>
             {% endif %}
             <label class="sr-only" for="form-email">Email</label>
-            <input type="email" name="email" placeholder="Email..." class="form-email form-control" id="form-email" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$" title="Enter a valid email">
+            <input type="text" name="email" placeholder="Email..." class="form-email form-control" id="form-email" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$" title="Enter a valid email" value="{{Register.email.value}}">
           </div>
           <div class="form-group">
-            {% if method == 'register' and  errors %}
-              <div class="error">{{errors.password}}</div>
+            {% if register_errors %}
+              <div class="error">{{register_errors.password}}</div>
             {% endif %}
             <label class="sr-only" for="password">Password</label>
             <input type="password" name="password" placeholder="Password..." class="form-email form-control" id="password">
           </div>
           <div class="form-group">
-            {% if method == 'register' and  errors %}
-              <div class="error">{{errors.c_password}}</div>
+            {% if register_errors %}
+              <div class="error">{{register_errors.c_password}}</div>
             {% endif %}
             <label class="sr-only" for="password">Repeat Password</label>
             <input type="password" name="c_password" placeholder="Confirm Password..." class="form-email form-control" id="password">
