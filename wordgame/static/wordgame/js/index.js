@@ -1,12 +1,18 @@
 $(window).load(function(){
 
-	$('#start_game').on('click',function(event) {
-		event.preventDefault();
-		load_questions();
-	})
-	$('#submit').hide()
+	sessionStorage.clickcount = 555;
+
+	var pathname = location.pathname;
+	console.log(pathname)
 	$('#question').hide()
 	$('#answer').hide()
+	$('#submit').hide()
+	$('#start_game').on('click',function(event) {
+		$('#submit').show()
+		event.preventDefault();
+		load_questions();
+
+	})
 	var count
 	var interval,time
 	function load_questions() {
@@ -20,7 +26,6 @@ $(window).load(function(){
 				console.log(q_data);
 				$("#question img").attr("src",q_data.img);
 				$("#question #word").text(q_data.word);
-				// $('#question #score').text(q_data.score)
 				$('#option1').val(q_data.option1)
 				$('label[for="option1"]').text(q_data.option1)
 				$('#option2').val(q_data.option2)
@@ -30,7 +35,6 @@ $(window).load(function(){
 				$('#option4').val(q_data.option4)
 				$('label[for="option4"]').text(q_data.option4)
 				$("#meaning").text('');
-				//$("#answer #word").text('');
 				$("#sentence").text('');
 				$("#phrase").text('');
 				$('input[type="radio"]').prop('checked', false);
@@ -74,7 +78,6 @@ var slot
 				$('#question').hide()
 				$('#answer').show()
 				$("#answer img").attr("src",check_response.img);
-				// $("#answer #score").text(check_response.score);
 				$("#complement").text(check_response.complement);
 				$("#answer #phrase").text(check_response.phrase);
 				$("#meaning").text(check_response.meaning);

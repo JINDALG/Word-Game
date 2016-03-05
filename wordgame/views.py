@@ -46,8 +46,9 @@ class LoginView(View):
 	def get(self,request):
 		if login_check(request) :
 			return HttpResponseRedirect('/')
-		return render(request , self.template , {'Login_fields' : self.Login_fields(), 'Register_fields' : self.Register_fields()})
+		return render(request , self.template, {})
 	def post(self,request):
+		error  = None
 		if 'login' in request.POST:
 			form = self.Login_fields(request.POST)
 			if form.is_valid():
@@ -57,16 +58,13 @@ class LoginView(View):
 				if user:
 					self.login(request,email)
 					return HttpResponseRedirect('/')
-				else:
-					error = "username and password does not match"
-					return render(request , self.template , {
-						'Login' : form, 
-						'Login_error' : error})
-			else :
-				error = form.errors
-				return render(request , self.template , {
-					'Login' : form, 
-					'Login_errors' : error.values(),})
+				error = "username and password does not match"
+			errors = form.errors
+			return render(request , self.template , {
+				'Login' : form,
+				'Login_error' : error, 
+				'Login_errors' : errors.values()})
+
 		elif 'register' in request.POST:
 			form = self.Register_fields(request.POST)
 			if form.is_valid():
@@ -80,32 +78,29 @@ class LoginView(View):
 					user.save()
 					request.session['user'] = str(email)
 					return HttpResponseRedirect('/')
-				else :
-					error = "Password does not match"
-					return render(request, self.template, {
-						'Register' : form,
-						'register_error':error})
-			else :
-				error = form.errors
-				return render(request, self.template, {
-					'Register' : form,
-					'register_errors' : error})
+				error = "Password does not match"
+	
+			errors = form.errors
+			return render(request, self.template, {
+				'Register' : form,
+				'register_error' : error,
+				'register_errors' : errors})
 def logout(request):
 	try:
 		del request.session['user']
+		del request.session['score'] 
+		del request.session['count']
+		del request.session['seq']
 	except:
 		return HttpResponseRedirect('/')
 	return HttpResponseRedirect('/')
-
-seq = None
-count = None
+ 
 slot_size = None
 @csrf_exempt
 def load_q(request):
+	global slot_size
 	user  = login_check(request)
 	if user :
-		global seq
-		global count,slot_size
 		if request.method =='POST' :
 			if request.session['count'] == 0:
 				slot_size = 3
@@ -139,10 +134,9 @@ def load_q(request):
 
 @csrf_exempt
 def check_ans(request):
+	global slot_size
 	user = login_check(request)
 	if user :
-		global seq
-		global count,slot_size
 		if request.method == 'POST':
 			try:
 				u_answer = request.POST.get('u_answer')
@@ -154,13 +148,11 @@ def check_ans(request):
 				response['slot_size'] = slot_size
 				response['word'] = "Word: " + question.word
 				if u_answer == question.meaning :
-					user.score += 1
-					user.save()
+					request.session['score'] +=1
 					response['complement'] = 'Good Job you are right!'
 					response['phrase'] = "Phrase: " +  question.phrase
 					response['meaning'] = "Meaning: " + question.meaning
 					response['sentence'] =  "Sentence: " + question.sentence
-					#response['score'] = user.score
 					return HttpResponse(
 						json.dumps(response),
 						content_type = 'application/json'
@@ -170,7 +162,7 @@ def check_ans(request):
 				else :
 					response['complement'] = 'Bad Guess, Better luck next time!'
 
-				response['score'] = user.score
+				response['score'] = user.total_score
 				return HttpResponse(
 					json.dumps(response),
 					content_type = 'application/json'
@@ -183,31 +175,22 @@ def check_ans(request):
 		return HttpResponseRedirect('/login')
 @csrf_exempt
 def game(request):
-	global count
-	count = 0
 	user = login_check(request)
 	if user :
 		if request.method == 'POST':
-			if user.score != -1:
-				if user.total_score == '0':
-					user.total_score = str(user.score)
-				else :
-					user.total_score += ',' + str(user.score)
-				user.score = -1
+			user.total_score += ',' + str(request.session['score'])
 			user.save()
 			score = user.total_score
 			score = score.split(',')[-1]
 			del request.session['count']
 			del request.session['seq']
+			del request.session['score']
 			return render(request, 'wordgame/thanks.html', {'user' : user,'score' : score})
 		else :
-			try :
-				print request.session['count']
-			except:
+			if request.session.get('count',None) == None:
 				request.session['score'] = 0
 				request.session['count'] = 0
-			user.score = 0
-			user.save()
+				
 			return render(request, 'wordgame/game.html' , {'user' : user})
 	else :
 		return HttpResponseRedirect('/login')
