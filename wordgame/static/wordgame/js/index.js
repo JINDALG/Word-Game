@@ -52,6 +52,7 @@ $(window).load(function(){
 			},
 			error : function(xhr,errmsg,err) {
 				$('#error_q').val('question not load')
+				console.loag('hhh')
 				console.log(xhr.status + ' : ' + xhr.responseText);
 			}
 		})

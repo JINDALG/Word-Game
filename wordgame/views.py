@@ -102,13 +102,13 @@ def load_q(request):
 	user  = login_check(request)
 	if user :
 		if request.method =='POST' :
+			response = {}
 			if request.session['count'] == 0:
 				slot_size = 3
 				request.session['seq'] = random.sample(range(1,len(Quiz.objects.all())+1),slot_size)
 			try :
 				seqe = request.session['seq']
 				q = Quiz.objects.get(pk=seqe[request.session['count']])
-				response = {}
 				options = random.sample(range(1,len(Quiz.objects.all())+1),4)
 				i=1
 				for option in options:
@@ -117,7 +117,7 @@ def load_q(request):
 				response['img'] = str(q.image_url.url)
 				response['word'] = str(q.word).capitalize()
 				print q.word
-				#response['score'] = user.score
+				response['score'] = user.score
 				return HttpResponse(
 					json.dumps(response),
 					content_type='application/json'
@@ -189,8 +189,7 @@ def game(request):
 		else :
 			if request.session.get('count',None) == None:
 				request.session['score'] = 0
-				request.session['count'] = 0
-				
+				request.session['count'] = 0	
 			return render(request, 'wordgame/game.html' , {'user' : user})
 	else :
 		return HttpResponseRedirect('/login')
