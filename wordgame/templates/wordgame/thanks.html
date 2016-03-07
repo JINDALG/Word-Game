@@ -3,10 +3,11 @@
 {% block content %}
 	<div class="container">
 		<div class="jumbotron">
+
 			<h1>Thanks {{user.username}}</h1>
 			<h3>Total Question is : 15</h3>
 			<h3>Right Answer: {{score}}</h3>
-			<h3>You got {{score}} marks out of 15</h3>
+			<h3>You got {{score}} marks out of 15  ({{percent}}%)</h3>
 			<h1><a href="/game">Start Again</a></h1>
 		</div>
 	</div>

@@ -22,8 +22,7 @@ class User(models.Model):
 	username = models.CharField(max_length=20, validators = [name_regx], unique=True)
 	email = models.EmailField(unique = True)
 	password = models.CharField(max_length=20)
-	score = models.IntegerField(default =0)
-	total_score = models.CharField(max_length = 500,default = '0')
+	score = models.CharField(max_length = 1000,default = "")
 
 	def __unicode__(self):
 		return self.username

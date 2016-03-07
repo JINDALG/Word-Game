@@ -110,14 +110,19 @@ def load_q(request):
 				seqe = request.session['seq']
 				q = Quiz.objects.get(pk=seqe[request.session['count']])
 				options = random.sample(range(1,len(Quiz.objects.all())+1),4)
+				print options
+				if q.id not in options:
+					options[2] = q.id
+				
+				random.shuffle(options)
+				print options
 				i=1
 				for option in options:
 					response['option'+str(i)] = Quiz.objects.get(pk = option).meaning
 					i += 1
 				response['img'] = str(q.image_url.url)
-				response['word'] = str(q.word).capitalize()
-				print q.word
-				response['score'] = user.score
+				response['word'] = q.word.capitalize()
+				print response
 				return HttpResponse(
 					json.dumps(response),
 					content_type='application/json'
@@ -146,7 +151,7 @@ def check_ans(request):
 				request.session['count'] +=1
 				response['img'] = str(question.image_url.url)
 				response['slot_size'] = slot_size
-				response['word'] = "Word: " + question.word
+				response['word'] = "Word: " + question.word.capitalize()
 				if u_answer == question.meaning :
 					request.session['score'] +=1
 					response['complement'] = 'Good Job you are right!'
@@ -161,8 +166,6 @@ def check_ans(request):
 					response['complement'] = 'Time out, try next question'
 				else :
 					response['complement'] = 'Bad Guess, Better luck next time!'
-
-				response['score'] = user.total_score
 				return HttpResponse(
 					json.dumps(response),
 					content_type = 'application/json'
@@ -178,14 +181,22 @@ def game(request):
 	user = login_check(request)
 	if user :
 		if request.method == 'POST':
-			user.total_score += ',' + str(request.session['score'])
-			user.save()
-			score = user.total_score
-			score = score.split(',')[-1]
-			del request.session['count']
-			del request.session['seq']
-			del request.session['score']
-			return render(request, 'wordgame/thanks.html', {'user' : user,'score' : score})
+			if request.session.get('count',None) == None:
+				score = map(int,user.score.split(','))
+				score = score[-1]
+			else :
+				if user.score == "":
+					user.score = request.session['score']
+				else:
+					user.score += ',' + str(request.session['score'])
+				user.save()
+				score = request.session['score']
+				del request.session['count']
+				del request.session['seq']
+				del request.session['score']
+			per = round(score/15.0,2)
+			
+			return render(request, 'wordgame/thanks.html', {'user' : user,'score' : score,'percent':per})
 		else :
 			if request.session.get('count',None) == None:
 				request.session['score'] = 0
