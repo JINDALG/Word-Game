@@ -81,9 +81,9 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'wordgame',
-        'USER': 'root',
-        'PASSWORD': '123456',
-        'HOST': 'localhost',   # Or an IP Address that your DB is hosted on
+        'USER': 'b450241964b575',
+        'PASSWORD': '2207e1cd',
+        'HOST': 'ap-cdbr-azure-east-c.cloudapp.net',   # Or an IP Address that your DB is hosted on
         'PORT': '3306',
     }
 }
