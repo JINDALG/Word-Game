@@ -104,7 +104,7 @@ def load_q(request):
 		if request.method =='POST' :
 			response = {}
 			if request.session['count'] == 0:
-				slot_size = 4
+				slot_size = 15
 				request.session['seq'] = random.sample(range(1,len(Quiz.objects.all())+1),slot_size)
 			try :
 				seqe = request.session['seq']
