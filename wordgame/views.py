@@ -104,7 +104,7 @@ def load_q(request):
 		if request.method =='POST' :
 			response = {}
 			if request.session['count'] == 0:
-				slot_size = 15
+				slot_size = 4
 				request.session['seq'] = random.sample(range(1,len(Quiz.objects.all())+1),slot_size)
 			try :
 				seqe = request.session['seq']
@@ -194,7 +194,7 @@ def game(request):
 				del request.session['count']
 				del request.session['seq']
 				del request.session['score']
-			per = round(score/15.0,2)
+			per = round(score/4.0,2)*100
 			
 			return render(request, 'wordgame/thanks.html', {'user' : user,'score' : score,'percent':per})
 		else :
