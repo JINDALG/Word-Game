@@ -1,2 +1,2 @@
 web: gunicorn game.wsgi --log-file -
-web: python manage.py collectstatic --noinput ; gunicorn myapp.wsgi
+web: python manage.py collectstatic --noinput ; gunicorn game.wsgi
