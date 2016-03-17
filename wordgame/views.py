@@ -113,7 +113,7 @@ def load_q(request):
 				print options
 				if q.id not in options:
 					options[2] = q.id
-				
+		
 				random.shuffle(options)
 				print options
 				i=1
@@ -122,6 +122,7 @@ def load_q(request):
 					i += 1
 				response['img'] = str(q.image_url.url)
 				response['word'] = q.word.capitalize()
+				response['seq'] = seqe
 				print response
 				return HttpResponse(
 					json.dumps(response),
@@ -194,7 +195,7 @@ def game(request):
 				del request.session['count']
 				del request.session['seq']
 				del request.session['score']
-			per = round(score/4.0,2)*100
+			per = round(score/15.0,2)*100
 			
 			return render(request, 'wordgame/thanks.html', {'user' : user,'score' : score,'percent':per})
 		else :
