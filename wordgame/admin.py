@@ -10,4 +10,3 @@ admin.site.register(User)
 
 
 
-

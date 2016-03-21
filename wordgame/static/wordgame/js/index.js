@@ -76,6 +76,7 @@ var slot
 
 				console.log(check_response);
 
+				console.log(check_response);
 				count = check_response.count
 				$('#question').hide()
 				$('#answer').show()
@@ -90,6 +91,7 @@ var slot
 				console.log(slot)
 				console.log('success')
 
+				console.log('success')
 			},
 
 			error : function(xhr,errmsg,err) {

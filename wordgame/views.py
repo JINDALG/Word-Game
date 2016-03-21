@@ -96,6 +96,7 @@ def logout(request):
 	return HttpResponseRedirect('/')
  
 slot_size = 15
+
 @csrf_exempt
 def load_q(request):
 	global slot_size
@@ -113,7 +114,7 @@ def load_q(request):
 				print options
 				if q.id not in options:
 					options[2] = q.id
-
+				random.shuffle(options)
 				print options
 				i=1
 				for option in options:
@@ -123,7 +124,6 @@ def load_q(request):
 				response['word'] = q.word.capitalize()
 				response['seq'] = seqe
 				print response
-
 				return HttpResponse(
 					json.dumps(response),
 					content_type='application/json'
