@@ -1,0 +1,86 @@
+{% extends "wordgame/base.html" %}
+{% load staticfiles %}
+{% block content %}
+	<div id="start">
+		<div class="container">
+			<div class="jumbotron">
+				<h2>Hello {{user.username}} </h2>
+			</div>
+			<ul class="list-group">
+				<li class="list-group-item list-group-item-info">You will given 30 second for each question</li> 
+				<li class="list-group-item list-group-item-info">You can not access previous question after submitting</li>
+				<li class="list-group-item list-group-item-info">No negative marking</li>
+				<li class="list-group-item list-group-item-info">Four choice will be given for each question</li>
+			</ul>
+			<button id="start_game" class="btn btn-primary btn-lg">Start Game</button>
+		</div>
+	</div>
+ 	<div id='question'>
+ 		<div class="container">	
+ 				<div id="time">&nbsp;</div>
+ 			<!-- <h2><center>Score : <span id='score'></span></center></h2> -->
+ 			<div><h2><center id="word"></center></h2></div>
+ 			<div class="rows">
+ 				<div class="col-md-5">
+ 					<img class="img-thumbnail" alt="Question" width="400px" height="400px" src="">
+ 				</div>
+ 				<div class="col-md-7">
+ 					<form role="form" method="post" id="form">
+ 						<div class="form-group">
+ 							
+ 						</div>
+ 						<div class="form-group">
+ 							<input type="radio" name="answers" id='option1' required="required">
+ 							<label for="option1"></label>
+ 						</div>
+ 						<div class="form-group">
+ 							<input type="radio" name="answers" id='option2' required="required">
+			 				<label for="option2"></label>
+ 						</div>
+ 						<div class="form-group">
+ 							<input type="radio" name="answers" id='option3' required="required">
+				 			<label for="option3"></label>
+ 						</div>
+ 						<div class="form-group">
+ 							<input type="radio" name="answers" id='option4' required="required">
+				 			<label for="option4"></label>
+ 						</div>
+ 						<div class="form-group">
+ 							<button type="submit" id="check" class="btn btn-primary btn-lg">Submit</button>
+ 						</div>
+ 					</form>
+
+ 				</div>
+ 			</div>
+ 		</div>
+ 	</div>
+ 	<div id='answer'>
+ 		<!-- <h2><center>Score : <span id='score'></span></center></h2> -->
+ 		<div class="container">
+ 			<div id="time"></div>
+ 			<div><h2><center id='complement'></center></h2></div>
+	 		<div class="rows">
+	 			<div class="col-md-5">
+	 				<img class="img-thumbnail" width="400px" height="400px" alt="Answer" src="">
+	 			</div>
+	 			<div class="col-md-7">
+	 				<h3 id='word'></h3>
+	 				<h3 id='phrase'></h3>
+	 				<h3 id='meaning'></h3>
+			 		<h3 id='sentence'></h3>
+			 		<form method="post">
+			 			<button id='next' type="submit" class="btn btn-primary btn-lg">Next Question</button>
+			 		</form>
+	 			</div>
+	 		</div>
+	 	</div>
+ 	</div>
+ 	<div class="container" id='submit'>
+ 		<div class="pull-right">
+ 				<form method="post">
+					<button type="submit" class="btn btn-success btn-lg">Final Submit</button>
+			 	</form>
+ 		</div>
+ 	</div>
+ 	
+{% endblock %}
