@@ -87,9 +87,7 @@ var slot
 				$("#sentence").text(check_response.sentence);
 				slot = check_response.slot_size
 				count = check_response.count
-
 				console.log(slot)
-
 				console.log('success')
 
 			},

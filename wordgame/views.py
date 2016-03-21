@@ -96,7 +96,6 @@ def logout(request):
 	return HttpResponseRedirect('/')
  
 slot_size = 15
-slot_size = None
 @csrf_exempt
 def load_q(request):
 	global slot_size
