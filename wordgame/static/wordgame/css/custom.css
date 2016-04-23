@@ -1,0 +1,245 @@
+@import url('https://fonts.googleapis.com/css?family=Roboto+Slab|Lato');
+
+body {
+	background-color: rgba(3, 201, 169,0.6);
+}
+
+nav.navbar-inverse {
+	background-color: #2C3E50;
+	border:none;
+	border-radius: 0px;
+	padding: 10px;
+}
+
+nav.navbar-inverse .navbar-brand {
+	color: #fff;
+	font-size: 25px;
+	letter-spacing: 5px;
+	font-weight: light;
+	font-family: "Roboto Slab";
+}
+/*Toggle button Color*/
+.navbar-inverse .navbar-toggle:focus, .navbar-inverse .navbar-toggle:hover , .navbar-inverse .navbar-toggle {
+	background: #03C9A9;
+	border:none;
+	border-radius: 3px;
+}
+
+/*Drop Down Menu On Mobile*/
+.navbar-inverse .navbar-collapse, .navbar-inverse .navbar-form{
+	border:none;
+}
+.navbar-inverse .navbar-nav>.active>a, .navbar-inverse .navbar-nav>.active>a:focus, .navbar-inverse .navbar-nav>.active>a:hover {
+	background-color: rgba(44, 62, 80,0.9);
+	text-transform: uppercase;
+	letter-spacing: 2px;
+	transition: all 0.5s ease;
+}
+.navbar-inverse .navbar-nav>.active>a:hover {
+	letter-spacing: 4px;
+}
+.navbar-inverse .navbar-nav>li>a {
+    color: #9d9d9d;
+    text-transform: uppercase;
+    font-size: 16px;
+}
+/*Jumbotron styles*/
+.container .jumbotron {
+	background: rgba(255,255,255,0.4);
+	border-radius: 0px;
+	text-align: center;
+	color: #fff;
+	font-size: 50px;
+}
+.container .jumbotron h2 {
+	font-size:45px;
+	font-family: Lato;
+	letter-spacing: 3px; 
+}
+.container .jumbotron p {
+	letter-spacing: 4px;	
+}
+/*For game Submit Page*/
+.container .jumbotron h1 {
+	margin-top:25px;
+}
+.container .jumbotron h1 a {
+	border: 5px solid #2C3E50;
+	border-radius: 5px;
+	padding: 5px;
+	text-decoration: none;
+	text-transform: uppercase;
+	color: #2C3E50;
+	letter-spacing: 1px;
+	transition: 0.3s ease;
+}
+.container .jumbotron h1 a:hover {
+	letter-spacing: 3px;
+}
+
+/*Home Page list */
+.rows  h3 ul.list-group .list-group-item {
+	color: #fff;
+	background: none;
+	border: none;
+	border-radius: 0px;
+	margin: 0;
+	font-family: Arial;
+	font-size:22px;
+	letter-spacing: .5px;
+} 
+.rows  h3 ul.list-group .list-group-item:before {
+	content: "✓";
+	font-size: 30px;
+	height: 20px;
+	width: 20px;
+	display: inline-block;
+	margin-right: 10px;
+}
+
+/*Play Quiz Button*/
+.rows div.pull-right a button {
+	background: #EC644B;
+	border:none;
+	border-radius: 10px;
+	border-bottom: 10px solid #67DECB;
+	font-size: 20px;
+	text-transform: uppercase;
+	letter-spacing: 2px;
+}
+
+/*===========HomePage Styles Finished===========*/
+
+
+/*Login / Sign Up Page*/
+
+div.form-box .form-bottom button {
+	background: #2C3E50;
+	font-size: 22px;
+	letter-spacing: 2px;
+}
+div.form-box .form-top .form-top-left p {
+	line-height: 105%;
+}
+
+@media (max-width: 767px) {
+	.middle-border {
+    	margin: 25px 30px 0 30px;
+	}
+}
+
+/*===========Login / Sign Up Styles Finished===========*/
+
+
+/* =============Game Page Styles ============*/
+		/*First Page*/
+/* Rules */
+#start div.container ul.list-group .list-group-item {
+	background: rgba(255,255,255,0.3);
+	border: none;
+	border-radius: 0px;
+	font-size:16px;
+	color: #2C3E50;
+	font-family: Lato;
+}
+#start div.container ul.list-group .list-group-item:before {
+	content: "";
+	display: inline-block;
+	height: 10px; width: 10px;
+	background: #2C3E50;
+	border-radius: 100%;
+	margin-right: 10px;
+}
+
+/*Start Game Button*/
+
+button#start_game {
+	background: #F64747;
+	border:none;
+	border-radius: 10px;
+	font-size: 20px;
+	text-transform: uppercase;
+	letter-spacing: 2px;
+}
+
+/*================== #answer div styles=================*/
+#complement , h3#word,  h3#phrase,  h3#meaning ,  h3#sentence{
+	font-family: Lato;
+}
+.col-md-5 img {
+	margin-top: -20px;
+	padding: 5px;
+	border:none;
+	border-radius: 10px;
+	background: #C5EFF7;
+}
+.container div h2 {
+	margin-bottom:25px;
+}
+
+#submit button {
+	margin: 10px 0;
+	font-weight: bold;
+	background:#26A65B;
+	border-radius: 10px;
+	border: none;
+	text-transform: uppercase;
+	letter-spacing: 2.5px;
+}
+/*=================#question div styles==================*/
+#question { font-family: Lato; }
+
+div#time {
+	text-align: center;
+	font-size: 20px;
+}
+div#time:before {
+	content: "Seconds left : ";
+	color: #fff;
+}
+#question div h2 {
+	font-weight: light;
+}
+
+#question .rows .col-md-7 .form-group input {
+	display: none;
+}
+#question .rows .col-md-7 .form-group label {
+	font-size: 16px;
+}
+#question .rows .col-md-7 .form-group label:before {
+	content: "";
+	display: inline-block;
+	height: 10px; width: 10px;
+	background: #fff;
+	border-radius: 100%;
+	margin-right: 10px;
+	transition: all 0.3s ease;
+}
+#question .rows .col-md-7 .form-group input:checked + label:before {
+	height: 20px; width: 20px;
+	border: 5px solid #26A65B;
+}
+button#check , button#next {
+	background: transparent;
+	color: #2C3E50;
+	border-radius: 10px;
+	border:3px solid #2C3E50;
+	text-transform: uppercase;
+	font-weight: bold;
+	font-family: Lato;
+	transition: all 0.4s ease;
+}
+button#check:hover , button#next:hover{
+	background: #2C3E50;
+	color: #fff;
+}
+
+/*=========Performance Styles =======*/
+#graph {
+	max-width: 100%;
+	margin-top: -20px;
+}
+.jumbotron {
+	padding: 20px;
+}

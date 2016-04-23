@@ -1,9 +1,4 @@
 $(window).load(function(){
-
-	sessionStorage.clickcount = 555;
-
-	var pathname = location.pathname;
-	console.log(pathname)
 	$('#question').hide()
 	$('#answer').hide()
 	$('#submit').hide()

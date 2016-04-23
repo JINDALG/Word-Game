@@ -3,11 +3,18 @@
 {% load staticfiles %}
 <head>
 	<title>Catfat</title>
-	<link rel="stylesheet" type="text/css" href="{% static 'wordgame/css/bootstrap.min.css' %}" >
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!-- CSS -->
 
+	<link rel="stylesheet" type="text/css" href="{% static 'wordgame/css/bootstrap.min.css' %}" >
+  <link rel="stylesheet" type="text/css" href="{% static 'wordgame/css/custom.css' %}" >
+  <!-- JAVASCRIPT -->
 	<script type="text/javascript" src="{% static 'wordgame/js/jquery.js' %}"></script>
 	<script type="text/javascript" src="{% static 'wordgame/js/bootstrap.min.js' %}"></script>
 	<script src="{% static 'wordgame/js/index.js' %}"></script>
+  <!-- IMAGES -->
   <link rel="shortcut icon" href="{% static 'wordgame/images/title.jpg' %}">
   <link rel="shortcut icon" sizes="144x144" href="{% static 'wordgame/images/title.jpg' %}">
   <link rel="shortcut icon" sizes="114x114" href="{% static 'wordgame/images/title.jpg' %}">
