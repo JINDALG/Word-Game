@@ -17,7 +17,7 @@
     <!-- JAVASCRIPT -->
     <script type="text/javascript" src="{% static 'wordgame/js/jquery.js' %}"></script>
     <script type="text/javascript" src="{% static 'wordgame/js/bootstrap.min.js' %}"></script>
-    
+    <script type="text/javascript" src="{% static 'wordgame/js/scripts.js' %}"></script>
     <!-- IMAGES -->
     <link rel="shortcut icon" href="{% static 'wordgame/images/title.jpg' %}">
     <link rel="shortcut icon" sizes="144x144" href="{% static 'wordgame/images/title.jpg' %}">

@@ -68,10 +68,6 @@ var slot
 			type : 'POST',
 			data : {u_answer : u_answer },
 			success : function(check_response) {
-
-				console.log(check_response);
-
-				console.log(check_response);
 				count = check_response.count
 				$('#question').hide()
 				$('#answer').show()
@@ -83,10 +79,6 @@ var slot
 				$("#sentence").text(check_response.sentence);
 				slot = check_response.slot_size
 				count = check_response.count
-				console.log(slot)
-				console.log('success')
-
-				console.log('success')
 			},
 
 			error : function(xhr,errmsg,err) {
