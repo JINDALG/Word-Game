@@ -1,6 +1,10 @@
 
 # Word-Game
 
+A MCQ type word game for english vocabulary improvement. 
+
+https://w-game.herokuapp.com/
+
 #Installation
 
 The development of the Registration_Module server is running on Ubuntu, So this is the easiest environment to work with,
